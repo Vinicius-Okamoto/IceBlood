@@ -6,7 +6,11 @@ Este trabalho descreve o desenvolvimento de uma aplicação web de gerenciamento
 
 Integrantes:
 ARTHUR BISPO DOS SANTOS
+
 CARLOS TEVEZ ROSSETO SOARES
+
 LUCAS CIRIACO BORBA
+
 MATEUS QUEIROZ DO NASCIMENTO
+
 VINICIUS YUDI OKAMOTO
