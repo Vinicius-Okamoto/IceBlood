@@ -1,17 +1,46 @@
-# IceBlood
-Este é um projeto de Pesquisa e Inovação (PI) do primeiro semestre do curso de Análise e Desenvolvimento de Sistemas, turma B.
+# 🩸 LifeSense - IceBlood  
 
-# Projeto de solução IoT para o monitoramento da temperatura em câmaras de armazenamento de bolsas de sangue
-Este trabalho descreve o desenvolvimento de uma aplicação web de gerenciamento em temperaturas de bolsas de sangue, destinado a facilitar o monitoramento e reduzir perdas significativas. A aplicação utiliza tecnologias com sensores de temperatura e dashboard para permitir aos clientes gráficos em tempo real, históricos e acesso aos dados obtidos. Facilitando, desta forma, a compreensão de perdas, desvantagens e realizando ações para prevenir estes acontecimentos.   
+O **LifeSense** é um projeto inovador voltado para a **saúde e tecnologia**, que tem como principal aplicação o **IceBlood**: um sistema que monitora em tempo real a **temperatura do ambiente em que bolsas de sangue estão armazenadas**, garantindo maior segurança e confiabilidade no processo de conservação.  
 
-Integrantes:
+---
 
-ARTHUR BISPO DOS SANTOS
+## 🚀 Tecnologias Utilizadas  
 
-CARLOS TEVEZ ROSSETO SOARES
+- **Frontend & Backend**  
+  - JavaScript  
+  - APIs personalizadas  
 
-LUCAS CIRIACO BORBA
+- **Hardware & IoT**  
+  - Arduino  
+  - Sensor LM35 (monitoramento de temperatura)  
 
-MATEUS QUEIROZ DO NASCIMENTO
+- **Banco de Dados**  
+  - Virtualização em **Ubuntu**  
+  - Integração para armazenamento e análise dos dados coletados  
 
-VINICIUS YUDI OKAMOTO
+---
+
+## 🎯 Objetivo  
+
+O **IceBlood** tem como objetivo:  
+- Monitorar a temperatura em tempo real.  
+- Garantir que bolsas de sangue fiquem armazenadas em condições ideais.  
+- Prevenir desperdícios e riscos relacionados ao mau acondicionamento.  
+
+---
+
+## ⚙️ Funcionalidades  
+
+✅ Coleta de dados de temperatura com sensor LM35.  
+✅ Comunicação entre **Arduino** e **API JavaScript**.  
+✅ Armazenamento e gerenciamento dos dados em banco de dados virtualizado.  
+✅ Visualização e monitoramento pelo aplicativo **IceBlood**.  
+
+---
+
+## 🛠️ Como Executar  
+
+1. Clone este repositório:  
+   ```bash
+   git clone https://github.com/seuusuario/lifesense.git
+   cd lifesense
