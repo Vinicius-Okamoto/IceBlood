@@ -25,3 +25,13 @@ cidadeempresa varchar (30),
 complementoempresa varchar (45),
 siteempresa varchar (45)
 );
+
+create table bolsa_sangue (
+idbolsa INT AUTO_INCREMENT PRIMARY KEY, 
+tiposanguineoabo CHAR(2) NOT NULL,
+fatorrh char(1) not null,
+validadebolsa DATE NOT NULL,
+dtcoleta DATETIME,
+constraint chk_tipo check (tiposanguineoabo in ('A','B','AB','O')),
+constraint chk_rh check (fatorrh in ('+','-'))
+);
