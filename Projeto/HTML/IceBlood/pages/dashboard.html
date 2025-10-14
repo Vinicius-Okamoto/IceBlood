@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="shortcut icon" href="../assets/img/dashboard/logo.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
@@ -48,7 +49,72 @@
                     <p>30 min</p>
                 </div>
             </div>
+            <div id="dashboard">
+                <h1>Gráfico de Temperatura</h1>
+                <canvas id="temperatureChart"></canvas>
+                <canvas id="horaryChart"></canvas>
+            </div>
         </section>
     </main>
 </body>
+<script>
+  const ctx = document.getElementById('temperatureChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['12H', '13H', '14H', '15H', '16H', '17H'],
+      datasets: [{
+        label: 'Temperatura (ºC)',
+        data: [22, 19, 23, 25, 22, 20],
+        borderWidth: 1,
+        borderColor: '#70160E',
+        backgroundColor: '#FFFFFF',
+        tension: 0.4,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+        pointBackgroundColor: '#FFF',
+        pointBorderColor: '#000000',
+        pointBorderWidth: 2,
+        pointHoverBackgroundColor: '#FF5733',
+        pointHoverBorderColor: '#000000',
+        pointHoverBorderWidth: 2,
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          min: 0,
+          max: 40,
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+    const ctx2 = document.getElementById('horaryChart');
+
+  new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: ['12H', '13H', '14H', '15H', '16H', '17H'],
+      datasets: [{
+        label: 'Alertas Horários',
+        data: [22, 19, 23, 25, 22, 20],
+        borderWidth: 1,
+        
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          min: 0,
+          max: 40,
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+</script>
 </html>
