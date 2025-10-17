@@ -1,0 +1,152 @@
+@import url();
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: transparent;
+}
+.container-back {
+    /* position: relative */
+    position: absolute;
+    top: 0.1%;
+    left: 0.1%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+    /* width: 100vh; */
+    padding: 15px;
+}
+.botao-back {
+    display: flex;
+    flex-direction: center;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 40px;
+    border: 40px;
+    border-radius: 25px;
+    background-color: rgb(112, 22, 14) ;
+    font-size: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 80vh;
+    width: 80%;
+    background: rgb(255, 255, 255);
+    border: 2px solid black;
+    border-radius: 16px;
+    /*padding: 15% 20%; */
+    /* flex-wrap: wrap; */
+}
+
+.left-box{
+    font-size: 130%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 70%;
+    background: rgb(112, 22, 14);
+    border: 2px solid black;
+    border-radius: 16px;
+    color: white;
+    padding: 16px 16px;
+}
+.left-box h3{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+.left-box p{
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 80%;
+}
+.entrar{
+    width: 120px;
+    height: 40px;
+    border: 40px;
+    outline: 2px solid white;
+    border-radius: 25px;
+    border-color: white;
+    background-color: rgb(112, 22, 14);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: white;
+}
+
+.right-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 100%;
+    background: transparent;
+    color: rgb(0, 0, 0);
+    border: 2px;
+    border-radius: 16px;
+    padding: 4px 4px;
+}
+
+.right-box b{
+font-weight: bold;
+}
+
+.nome,
+.cnpj,
+.email,
+.senha{
+    width: 100%;
+    height: 30px;
+    background: white;
+    border: 2px solid rgb(112, 22, 14);
+    border-radius: 40px;
+    padding: 10px;
+    font-style: italic;
+}
+
+.container-input {
+    width: 58%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label-input {
+    width: 48%;
+    text-align: left;
+    padding: 1%;
+}
+
+.cadastrar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 40px;
+    border: 40px;
+    border-radius: 25px;
+    background-color: rgb(112, 22, 14);
+    font-size: clamp(0.8rem, 1.8vw, 1.0rem);
+    color: white;
+}
