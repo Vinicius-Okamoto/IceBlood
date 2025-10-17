@@ -12,11 +12,11 @@
 <body>
     <header>
         <div id="header-left">
-            <img src="../assets/img/dashboard/logo.png" alt="Logo do LifeSense">
+            <img src="../assets/img/dashboard/logo.png" alt="Logo do IceBlood">
             <h1>IceBlood</h1>
             <nav>
                 <ul>
-                    <li><a href="dashboard.html">DashBoard</a></li>
+                    <li><a href="dashboard.html" class="active">DashBoard</a></li>
                     <li><a href="historico.html">Histórico</a></li>
                     <li><a href="sair.html">Sair</a></li>
                 </ul>
@@ -25,34 +25,43 @@
     </header>
     <main>
         <section>
-            <h1>Olá, Empresa</h1>
+            <h1>Olá, Empresa 👋</h1>
             <h2>Bem-vindo ao seu painel de controle</h2>
             <div class="kpi-cards">
                 <div class="card">
                     <h3>Temperatura Atual</h3>
-                    <img src="../assets/img/dashboard/ArrowRise.png" alt="ArrowRise Icon">
+                    <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
                     <p>30 ºC</p>
                 </div>
                 <div class="card">
                     <h3>Total de alertas</h3>
-                    <img src="../assets/img/dashboard/ArrowRise.png" alt="ArrowRise Icon">
+                    <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
                     <p>5 alertas</p>
                 </div>
                 <div class="card">
                     <h3>Economia Financeira</h3>
-                    <img src="../assets/img/dashboard/ArrowRise.png" alt="ArrowRise Icon">
+                    <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
                     <p>R$: 5000,00</p>
                 </div>
                 <div class="card">
                     <h3>Fora da faixa ideal</h3>
-                    <img src="../assets/img/dashboard/ArrowRise.png" alt="ArrowRise Icon">
+                    <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
                     <p>30 min</p>
                 </div>
             </div>
+            
             <div id="dashboard">
-                <h1>Gráfico de Temperatura</h1>
-                <canvas id="temperatureChart"></canvas>
-                <canvas id="horaryChart"></canvas>
+                <h1>Relatórios de Temperatura</h1>
+                <div class="charts-wrapper"> 
+                    <div class="chart-container">
+                      <h2>Gráfico de Temperatura</h2>
+                      <canvas id="temperatureChart"></canvas>
+                    </div>
+                    <div class="chart-container-horary">
+                      <h2>Alertas Horários</h2>
+                      <canvas id="horaryChart"></canvas>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -67,52 +76,86 @@
       datasets: [{
         label: 'Temperatura (ºC)',
         data: [22, 19, 23, 25, 22, 20],
-        borderWidth: 1,
-        borderColor: '#70160E',
-        backgroundColor: '#FFFFFF',
+        borderWidth: 3,
+        borderColor: '#B9030F', 
+        backgroundColor: 'rgba(185, 3, 15, 0.1)', 
+        fill: true, 
         tension: 0.4,
-        pointRadius: 5,
-        pointHoverRadius: 7,
-        pointBackgroundColor: '#FFF',
-        pointBorderColor: '#000000',
+        pointRadius: 6,
+        pointHoverRadius: 9,
+        pointBackgroundColor: 'white',
+        pointBorderColor: '#B9030F',
         pointBorderWidth: 2,
-        pointHoverBackgroundColor: '#FF5733',
-        pointHoverBorderColor: '#000000',
-        pointHoverBorderWidth: 2,
+        pointHoverBackgroundColor: '#B9030F',
+        pointHoverBorderColor: 'white',
+        pointHoverBorderWidth: 3,
       }]
     },
     options: {
+        responsive: true,
+        maintainAspectRatio: false, 
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+            },
+        },
       scales: {
         y: {
           min: 0,
           max: 40,
-          beginAtZero: true
+          grid: {
+              color: '#f0f0f0'
+          },
+        },
+        x: {
+            grid: {
+                display: false // Tirei as linhas verticais (chamadas de grid lines)
+            },
         }
       }
     }
   });
 
-    const ctx2 = document.getElementById('horaryChart');
+  const ctx2 = document.getElementById('horaryChart');
 
   new Chart(ctx2, {
     type: 'doughnut',
     data: {
-      labels: ['12H', '13H', '14H', '15H', '16H', '17H'],
+      labels: ['Manhã', 'Tarde', 'Noite'],
       datasets: [{
-        label: 'Alertas Horários',
-        data: [22, 19, 23, 25, 22, 20],
-        borderWidth: 1,
+        label: 'Contagem de Alertas',
+        data: [8, 10, 6, 4],
+        backgroundColor: [
+            'rgba(112, 22, 14, 0.5)', 
+            'rgba(112, 22, 14, 0.7)', 
+            'rgba(112, 22, 14, 1)',  
+        ],
+        hoverBackgroundColor: [
+            'rgba(112, 22, 14, 0.5)', 
+            'rgba(112, 22, 14, 0.7)', 
+            'rgba(112, 22, 14, 1)', 
+        ],
+        borderWidth: 0,
         
       }]
     },
     options: {
-      scales: {
-        y: {
-          min: 0,
-          max: 40,
-          beginAtZero: true
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            // Mexer nas legendas do grafico (através da biblioteca Chart.js)
+            legend: {
+                position: 'right',
+                labels: {
+                    font: {
+                        family: 'Poppins'
+                    },
+                    boxWidth: 20,
+                    padding: 15
+                }
+            },
         }
-      }
     }
   });
 
