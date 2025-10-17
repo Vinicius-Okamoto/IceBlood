@@ -6,9 +6,12 @@
 
 *{
     margin: 0%;
+    scroll-behavior: smooth;
     font-family: "Poppins", sans-serif;
 
 }
+
+
 
 .header{
     margin-top: 20px;
@@ -34,10 +37,21 @@
     margin-right: 10%;
 }
 
+.header nav ul a{
+    color: #333;
+    text-decoration: none;
+}
+
+.header  nav ul a:hover{
+    transform: translateY(-5px);
+    color: var(--secundaria);
+}
 
 .header nav ul img{
     width: 175px;
 }
+
+/* ----------------------------------------------------------------------- */
 
 .container1{
     margin: 4%;
@@ -90,11 +104,12 @@
     border: none;
     color: antiquewhite;
     font-style: normal;
-    font-size: 20px;
+    font-size: 150%;
     font-weight: 800;
     border-radius: 30px;
     padding: 8px;
     margin-left: 30%;
+    cursor: pointer;
 }
 
 
@@ -393,14 +408,74 @@
 .email{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     text-align: left;
 }
 
+.email label{
+    text-align: left;
+}
 
 .email input{
     border: none;
     background-color: transparent;
     border-bottom: 1px solid #333;
+    text-align: left;
+    margin-bottom: 10%;
 }
+
+.email button{
+    margin: 20% 4%;
+    background-color: var(--main);
+    color: aliceblue;
+    border: none;
+    border-radius: 15px;
+
+    width: 100%;
+    padding: 2% 6%;
+    font-size: 150%;
+}
+/* ------------------------------------------------------------------------ */
+
+footer{
+    width: 100%;
+    height: 45vh;
+
+    background-color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.caixa-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+footer img{
+    width: 70%;
+    margin: 10%;
+    opacity: 70%;
+}
+
+footer h4{
+    color: var(--main);
+    font-size: 150%;
+    font-style: normal;
+    font-weight: 500;
+
+}
+
+footer p{
+    text-align: justify;
+    padding: 4% 30%;
+}
+
+footer div i{
+    color: var(--terciaria);
+}
+
+
