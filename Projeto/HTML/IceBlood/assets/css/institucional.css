@@ -1,17 +1,14 @@
 :root{
     --main: #70160e;
     --secundaria: #89030f;
-    --terciaria: #9E0004;
+    --terciaria: #B9030F;
 }
 
 *{
     margin: 0%;
     scroll-behavior: smooth;
     font-family: "Poppins", sans-serif;
-
 }
-
-
 
 .header{
     margin-top: 20px;
