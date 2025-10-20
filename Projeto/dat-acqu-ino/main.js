@@ -20,9 +20,9 @@ const serial = async (
         {
             host: '127.0.0.1',
             user: 'lifesense',
-            password: 'lifesense123',
+            password: 'IceBlood@123',
             database: 'iceblood',
-            port: 3306 // Inserindo os dados no banco virtualizado
+            port: 3307 // Inserindo os dados no banco virtualizado
         } 
     ).promise(); 
 
@@ -69,19 +69,19 @@ const serial = async (
             // este insert irá inserir os dados na tabela "medida"
             await poolBancoDados.execute(
                 'INSERT INTO registro (temperatura, dtHora, fkSensor) VALUES (?, ?, 1)',
-                [sensorAnalogico + 10, dataHoraAtual]
+                [sensorAnalogico + 3, dataHoraAtual]
             );
-            console.log("valores inseridos no banco: ", sensorAnalogico + 10, dataHoraAtual);
+            console.log("valores inseridos no banco: ", sensorAnalogico + 3, dataHoraAtual);
             await poolBancoDados.execute(
-                'INSERT INTO registro (temperatura, dtHora, fkSensor) VALUES (?, ?, 2)',
+                'INSERT INTO registro (temperatura, dtHora, fkSensor) VALUES (?, ?, 1)',
                 [sensorAnalogico, dataHoraAtual]
             );
             console.log("valores inseridos no banco: ", sensorAnalogico, dataHoraAtual);
             await poolBancoDados.execute(
-                'INSERT INTO registro (temperatura, dtHora, fkSensor) VALUES (?, ?, 3)',
-                [sensorAnalogico - 10, dataHoraAtual]
+                'INSERT INTO registro (temperatura, dtHora, fkSensor) VALUES (?, ?, 1)',
+                [sensorAnalogico - 2, dataHoraAtual]
             );
-            console.log("valores inseridos no banco: ", sensorAnalogico - 10, dataHoraAtual);
+            console.log("valores inseridos no banco: ", sensorAnalogico - 2, dataHoraAtual);
         }
 
     });
