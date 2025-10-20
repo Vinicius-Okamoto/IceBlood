@@ -93,6 +93,7 @@ body {
     background-color: rgb(112, 22, 14);
     font-size: clamp(1rem, 2vw, 1.2rem);
     color: white;
+    cursor: pointer;
 }
 
 .right-box{
@@ -150,4 +151,5 @@ font-weight: bold;
     background-color: rgb(112, 22, 14);
     font-size: clamp(0.8rem, 1.8vw, 1.0rem);
     color: white;
+    cursor: pointer;
 }

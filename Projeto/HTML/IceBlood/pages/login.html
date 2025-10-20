@@ -15,7 +15,13 @@
 <body>
     <Div class="container-back">
         <!--   -->
-        <button class="botao-back"><i class='bxr  bx-arrow-left-stroke' style="color: white; transform: scale(2);" ></i> </button>
+
+    <button class="botao-back">
+        <a href="../pages/institucional.html">
+            <i class='bxr bx-arrow-left-stroke' style="color: white; transform: scale(2);"></i>
+        </a>
+    </button>
+</Div>
     </Div>
     <!-- Div grande bloco termina somente no final -->
     <div class="container">
@@ -26,7 +32,9 @@
             <br>
             <p> Cadastre-se e descubra como a <br>IoT Transforma a saúde</p>
             <br><br>
-            <button class="entrar">Cadastrar agora</button>
+            <button onclick="window.location.href='../pages/cadastro.html'" class="entrar">
+                Cadastrar agora
+            </button>
             <br><br><br><br>    
         </div>
 
@@ -57,7 +65,6 @@
                 <i class='bx  bx-lock-keyhole-open' style="transform: scale(2);">  </i>
                 <input type="text" placeholder="Digite aqui..." class="senha"><br>
             </div> <br>
-
             <button onclick="cadastrar()" class="cadastrar">Entrar</button>
         </div>
     </div>
