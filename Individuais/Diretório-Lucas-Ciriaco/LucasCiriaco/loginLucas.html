@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  <style>
+    * {
+      box-sizing: border-box; 
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 120px auto;
+      background: #fff;
+      padding: 40px 30px; 
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 120px;
+    }
+
+    h2 {
+      color: #800000;
+      margin-bottom: 20px;
+    }
+
+    .campo-input {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .campo-input label {
+      display: block;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .campo-input input {
+      width: 100%; 
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #800000;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #A52A2A;
+    }
+
+    .cadastro {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .cadastro a {
+      color: #800000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .cadastro a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="E:\Downloads\lifesense.jpg" alt="Logo" class="logo">
+    
+    <h2>Login</h2>
+
+    <div class="campo-input">
+      <label >Seu CNPJ</label>
+      <input type="text" id="iptCNPJ" placeholder="Digite aqui...">
+    </div>
+
+    <div class="campo-input">
+      <label>Sua senha</label>
+      <input type="password" id="iptSenha" placeholder="Digite aqui...">
+    </div>
+    
+    <button onclick="acessar()">Entrar</button>
+
+    <div class="cadastro">
+      Ainda não tem conta? <a href="cadastroLucas.html">Cadastre-se</a>
+    </div>
+  </div>
+</body>
+<script>
+    function acessar(){
+        var keyCNPJ ='101010';
+        var keySenha = '123456';
+        var CNPJ = iptCNPJ.value;
+        var psw = iptSenha.value;
+        if(keyCNPJ != CNPJ && keySenha != psw){
+            alert('CNPJ e Senha não correspondem...')
+        }else{
+            window.location.href = "main.html";
+        }
+    }
+</script>
+</html>
