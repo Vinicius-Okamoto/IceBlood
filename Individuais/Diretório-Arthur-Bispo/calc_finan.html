@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IceBlood</title>
+</head>
+<body>
+    <h2>Calculadora Financeira</h2>
+    <h3>Controle de Bolsas de Sangue</h3>
+    Insira o nome da sua empresa: <input type="text" name="" id="iptNome"><br><br>
+    Insira a Quantidade de Bolsas de Sangue que pretende armazenar: <br>
+    <input type="text" name="" id="iptBolsas"><br>
+    <button onclick="calcular()">Calcular</button>
+    <div id="divMsg"></div>
+</body>
+<script>
+        function calcular() {
+        var bolsas = Number(iptBolsas.value); 
+        var custoTotal = bolsas * 500;
+        var perdaSem = custoTotal * 0.20; 
+        var perdaCom = custoTotal * 0.10;
+        var economiaMensal = perdaSem - perdaCom;
+        var economiaAnual = economiaMensal * 12;
+
+        divMsg.innerHTML = `Olá, <b>${iptNome.value}</b><br>
+        Com <b>${bolsas}</b> bolsas armazenadas ao mês, cada uma no valor médio de <b>R$500,00</b>:
+        <br>O custo total mensal estimado é de <b>R$ ${custoTotal.toFixed(2)}</b>.
+        <br><br>Sem o sistema, em média <b style="color:red;">20%</b> seriam perdidas, equivalente a <b style="color:red;">R$ ${perdaSem.toFixed(2)}</b>.
+         <br>Com o sistema, as perdas caem para apenas <b style="color:green;">10%</b>, equivalente a <b style="color:green;">R$ ${perdaCom.toFixed(2)}</b>.
+         <br><br>Isso representa uma economia mensal de <b style="color:green;">R$ ${economiaMensal.toFixed(2)}</b>, totalizando <b style="color:green;">R$ ${economiaAnual.toFixed(2)}</b> ao ano.`;
+
+        ipt_bolsas.value = '';
+        ipt_valor.value = '';
+        }
+
+</script>
+</html>

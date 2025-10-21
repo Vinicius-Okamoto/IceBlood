@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IceBlood</title>
+</head>
+<body>
+  <h2>Calculadora Financeira</h2>
+  <h3>Redução de perdas no armazenamento de bolsas de sangue</h3>
+
+  Nome da empresa: <br>
+  <input type="text" id="iptNome"><br><br>
+
+  Quantidade de bolsas a armazenar mensalmente: <br>
+  <input type="number" id="iptBolsas"><br><br>
+
+  Valor médio de cada bolsa (R$): <br>
+  <input type="number" id="iptValor" ><br><br>
+
+  Visualizar perdas: 
+  <select id="tipoPeriodo">
+    <option value="mensal">Mensal</option>
+    <option value="anual">Anual</option>
+  </select><br><br>
+
+  <button onclick="calcular()">Calcular</button>
+<br><br>
+  <div id="divMsg"></div>
+
+  <script>
+    function calcular() {
+      let nome = iptNome.value.trim();
+      let qtdBolsas = Number(iptBolsas.value);
+      let valor = Number(iptValor.value);
+      let periodo = tipoPeriodo.value;
+
+      if (nome === "" || qtdBolsas <= 0 || valor <= 0) {
+        alert("Preencha todos os campos corretamente!");
+        return;
+      }
+
+      let perdaSem = qtdBolsas * 0.20;
+      let perdaCom = qtdBolsas * 0.10;
+
+      let perdaFinanceiraSem = perdaSem * valor;
+      let perdaFinanceiraCom = perdaCom * valor;
+      let economia = perdaFinanceiraSem - perdaFinanceiraCom;
+
+      if (periodo === "anual") {
+        perdaSem *= 12;
+        perdaCom *= 12;
+        perdaFinanceiraSem *= 12;
+        perdaFinanceiraCom *= 12;
+        economia *= 12;
+      }
+
+      divMsg.innerHTML = `
+        Olá, <b>${nome}</b>!<br><br>
+        Considerando <b>${qtdBolsas}</b> bolsas custando <b>R$${valor.toFixed(2)}</b> cada:<br><br>
+        <b style="color:red;">Sem a nossa solução:</b> ${perdaSem.toFixed(0)} bolsas perdidas, gerando prejuízo de 
+        <b style="color:red;">R$${perdaFinanceiraSem.toFixed(2)}</b> (${periodo}).<br><br>
+        <b style="color:green;">Com a nossa solução:</b> ${perdaCom.toFixed(0)} bolsas perdidas, prejuízo reduzido para 
+        <b style="color:green;">R$${perdaFinanceiraCom.toFixed(2)}</b> (${periodo}).<br><br>
+        Isso representa uma <b style="color:green;">economia de R$${economia.toFixed(2)}</b> (${periodo}).
+      `;
+    }
+  </script>
+</body>
+</html>

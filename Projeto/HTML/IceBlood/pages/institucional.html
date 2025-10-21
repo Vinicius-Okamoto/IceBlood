@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/institucional.css">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+
+        <nav>
+            <ul>
+                <li><img src="../assets/img/Institucional/lifesense.png" alt=""></li>
+                <li><a href="">Home</a></li>
+                <li><a href="#sobre">Sobre nós</a></li>
+                <li><a href="#iceblood">IceBlood</a></li>
+                <li><a href="#doacao">Doação</a></li>
+                <li><a href="#contatos">Contatos</a></li>
+                <li><a href="../pages/login.html"><img src="" alt="">Entre</a> ou <a href="../pages/cadastro.html">cadastre-se</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container1">
+        <div class="simular">
+            <h2>Salve vidas com eficiência!</h2>
+            <p>Monitore em tempo real a temperatura de bolsas de sangue, evite descartes e assegure o fornecimento
+                contínuo para quem mais precisa</p>
+            <button onclick="window.location.href='#calculadora'">Quero simular!</button>
+        </div>
+        <div class="img1">
+            <img src="../assets/img/Institucional/img1.png" alt="">
+        </div>
+    </section>
+
+    <section class="container2" id="sobre">
+        <div class="sobre-lifesense">
+            <h2>Sobre a LifeSense</h2>
+            <p>Somos uma empresa de tecnologia e IoT focada em inovações para o setor da saúde. Nossas soluções conectam
+                o mundo físico e digital, otimizando processos, garantindo a segurança de ativos críticos e gerando
+                eficiência operacional para hospitais e clínicas.</p>
+        </div>
+        <div class="img2">
+            <img src="../assets/img/Institucional/lifesense.png" alt="">
+        </div>
+    </section>
+
+    <section class="container3" id="iceblood">
+        <div class="img3">
+            <img src="../assets/img/Institucional/iceblood.png" alt="">
+        </div>
+        <div class="sobre-iceblood">
+            <h2>Como surgiu a IceBlood?</h2>
+            <p>Nossa jornada começou ao observar de perto os desafios enfrentados em ambientes hospitalares. A visão de
+                um futuro onde cada doação de sangue é protegida, do início ao fim, nos inspirou a criar o IceBlood.</p>
+        </div>
+    </section>
+
+    <section class="container4" id="doacao">
+
+        <h2>Ciclo de Doação</h2>
+
+        <div class="cards">
+            <div class="card">
+                <img src="../assets/img/Institucional/estatisticas 1.png" alt="">
+                <h3>Análise sorológica</h3>
+                <p>A análise sorológica garante que o sangue doado esteja livre de doenças trsmiseveis, identoifcasndo
+                    infecçoes e confirmando o tipo sanguineo corretamente</p>
+            </div>
+
+            <div class="card">
+                <img src="../assets/img/Institucional/segurando-o-equipamento-manual 1.png" alt="">
+                <h3>Manutenção</h3>
+                <p>A manutenção assegura que os equipamentos de refrigeração e monitoramento funcionem perfeitamente,
+                    evitando falhas que comprometam a qualidade e segurança das bolsas.</p>
+            </div>
+
+            <div class="card">
+                <img src="../assets/img/Institucional/caixa 1.png" alt="">
+                <h3>Preservação</h3>
+                <p>A preservação envolve armazenar cada componente sanguíneo em temperatura adequada, garantindo
+                    validade,
+                    eficácia e segurança até ser utilizado em transfusões hospitalares.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="calculadora" id="calculadora">
+        <h2>Calculadora Financeira</h2>
+
+        <div class="calculadora-caixa">
+
+            <div class="inserir"> 
+                <h4>Insira o nome da sua empresa</h4>
+                <input type="text" id="iptNome">
+
+                <h4>Digite a quantidade de bolsas que você precisa guardar:</h4>
+                <input type="number" id="iptQuantidade">
+
+                <select name="" id="tipoGasto">
+                    <option value="">Tipo de visualização</option>
+                    <option value="mensal">Mensal</option>
+                    <option value="anual">Anual</option>
+                </select>
+
+                <button onclick="publico()">calcular</button>
+            </div>
+
+            <div class="resultado" id="div_resultado">
+                <!-- <p>Olá, Sangue! <br>Sem o nosso sistema, sua empresa perderia aproxidamente 10 bolsas  mensais, gerando um
+                    prejuizo de R$:5000,00. <br>
+                    Com o nosso sistema, a sua empresa terá uma redução de 10% com base na
+                    quantidade de bolsas armazenadas, resultando em apenas 5 bolsas perdidas, gerando uma economia de
+                    R$2500 mensais.</p> -->
+            </div>
+        </div>
+    </section>
+
+    <section class="contato" id="contatos">
+        <div class="contate-nos">
+            <h2>Contate-nos</h2>
+            <img src="../assets/img/Institucional/contate-nos.png" alt="">
+        </div>
+
+        <div class="email">
+            
+            <label for="inputEmail">Email</label>
+            <input type="text" id="inputEmail">
+             <label for="inputMsg">Mensagem</label>
+            <input type="text" id="inputMsg">
+            <button>Enviar</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="caixa-footer">
+        <div><img src="../assets/img/Institucional/lifesense.png" alt="">
+            <a href=""></a>
+            <a href=""></a>
+            <a href=""></a>
+            <a href=""></a>
+        </div>
+
+        <h4>Menu</h4>
+
+        <div><p>No setor da saúde, nossas inovações, baseadas em sensores, dados e conectividade, otimizam processos críticos.</p></div>
+
+        </div>
+
+        <div><i>@2025 copyright by IceBlood</i></div>
+    </footer>
+    
+</body>
+<script>
+    var perda = 500;
+    function publico() {
+        var nome = iptNome.value;
+        var qtdBolsa = Number(iptQuantidade.value);
+        var selectPerdas = tipoGasto.value;
+
+        var prejuizoBolsa = qtdBolsa * 0.20;
+        var prejuizoFinanceiro = prejuizoBolsa * 500;
+
+        var prejuizoBolsaAnual = prejuizoBolsa * 12;
+        var prejuizoFinanceiroAnual = prejuizoFinanceiro * 12;
+
+        var diminuirPerdasMensal = qtdBolsa * 0.10;
+        var diminuirPrejuizoMensal = prejuizoFinanceiro - (diminuirPerdasMensal * 500);
+
+        var diminuirPerdasAnual = diminuirPerdasMensal * 12;
+        var diminuirPrejuizoAnual = diminuirPrejuizoMensal * 12;
+
+        if (nome == '' && qtdBolsa <= 0) {
+            alert('Insira valores válidos!');
+        } else {
+            if (selectPerdas == 'mensal') {
+                div_resultado.innerHTML = `Olá, ${nome}! <br> Sem o nosso sistema, sua empresa perderia aproxidamente <b style= "color: red;">${prejuizoBolsa}</b> bolsas mensais, gerando um prejuizo de <b style= "color: red;">R$${prejuizoFinanceiro.toFixed(2)}</b>. <br>  Com o nosso sistema, a sua empresa terá uma redução de 10% com base na quantidade de bolsas armazenadas, resultando em apenas <b style= "color: green;">${diminuirPerdasMensal}</b> bolsas perdidas, gerando uma economia de <b style= "color: green;">R$${diminuirPrejuizoMensal}</b> mensais.`
+            } else if (selectPerdas == 'anual') {
+                div_resultado.innerHTML = `Olá, ${nome}! <br> Sem o nosso sistema, sua empresa perderia aproximadamente <b style= "color: red;">${prejuizoBolsaAnual}</b> bolsas anuais, gerando um prejuizo de <b style= "color: red;">R$${prejuizoFinanceiroAnual.toFixed(2)}</b>.<br> Com o nosso sistema, a sua empresa terá uma redução de 10% com base na quantidade de bolsas armazenadas, resultando em apenas <b style= "color: green;">${diminuirPerdasAnual}</b> bolsas perdidas, gerando uma economia de <b style= "color: green;">R$${diminuirPrejuizoAnual}</b> anuais.`
+            } else {
+                alert('Selecione uma opção válida!');
+            }
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard - IceBlood</title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="shortcut icon" href="../assets/img/dashboard/logo.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2/dist/chartjs-plugin-annotation.min.js"></script>
+</head>
+<body>
+    <header>
+        <div id="header-left">
+            <img src="../assets/img/dashboard/logo.png" alt="Logo do IceBlood">
+            <h1>IceBlood</h1>
+            <nav>
+                <ul>
+                    <li><a href="dashboard.html" class="active">DashBoard</a></li>
+                    <li><a href="historico.html">Histórico</a></li>
+                    <li><a href="sair.html">Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h1>Olá, Empresa 👋</h1>
+            <h2>Bem-vindo ao seu painel de controle</h2>
+            <div class="kpi-cards">
+                <div class="card">
+                    <h3>Temperatura Atual</h3>
+                    <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
+                    <p>30 ºC</p>
+                </div>
+                <div class="card">
+                    <h3>Total de alertas</h3>
+                    <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
+                    <p>5 alertas</p>
+                </div>
+                <div class="card">
+                    <h3>Temperatura Média</h3>
+                    <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
+                    <p>5 ºC</p>
+                </div>
+                <div class="card">
+                    <h3>Status</h3>
+                    <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
+                    <p>Normal</p>
+                </div>
+            </div>
+            
+            <div id="dashboard">
+                <h1>Relatórios de Temperatura</h1>
+                <div class="charts-wrapper"> 
+                    <div class="chart-container">
+                      <h2>Gráfico de Temperatura</h2>
+                      <canvas id="temperatureChart"></canvas>
+                    </div>
+                    <div class="chart-container-horary">
+                      <h2>Alertas Horários</h2>
+                      <canvas id="horaryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+<script>
+  const ctx = document.getElementById('temperatureChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['12H', '13H', '14H', '15H', '16H', '17H'],
+      datasets: [{
+        label: 'Temperatura (ºC)',
+        data: [2, 4, 8, 10, 8, 5],
+        borderWidth: 3,
+        borderColor: '#B9030F', 
+        backgroundColor: 'rgba(185, 3, 15, 0.1)', 
+        fill: true, 
+        tension: 0.4,
+        pointRadius: 6,
+        pointHoverRadius: 9,
+        pointBackgroundColor: 'white',
+        pointBorderColor: '#B9030F',
+        pointBorderWidth: 2,
+        pointHoverBackgroundColor: '#B9030F',
+        pointHoverBorderColor: 'white',
+        pointHoverBorderWidth: 3,
+      }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false, 
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+            },
+            annotation: {
+                    annotations: {
+                        tempAlertaMin: {
+                            type: 'line',
+                            yMin: 2,
+                            yMax: 2,
+                            borderColor: 'rgba(208, 94, 24, 1)',
+                            borderWidth: 3,
+                        },
+                        tempAlertaMax: {
+                            type: 'line',
+                            yMin: 6,
+                            yMax: 6,
+                            borderColor: 'rgba(208, 94, 24, 1)',
+                            borderWidth: 3,
+                        }
+                    }
+                }
+        },
+      scales: {
+        y: {
+          min: 0,
+          max: 15,
+          grid: {
+              color: '#f0f0f0'
+          },
+        },
+        x: {
+            grid: {
+                display: false // Tirei as linhas verticais (chamadas de grid lines)
+            },
+        }
+      }
+    }
+  });
+
+  const ctx2 = document.getElementById('horaryChart');
+
+  new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: ['Manhã', 'Tarde', 'Noite'],
+      datasets: [{
+        label: 'Contagem de Alertas',
+        data: [8, 10, 6, 4],
+        backgroundColor: [
+            'rgba(112, 22, 14, 0.5)', 
+            'rgba(112, 22, 14, 0.7)', 
+            'rgba(112, 22, 14, 1)',  
+        ],
+        hoverBackgroundColor: [
+            'rgba(112, 22, 14, 0.5)', 
+            'rgba(112, 22, 14, 0.7)', 
+            'rgba(112, 22, 14, 1)', 
+        ],
+        borderWidth: 0,
+        
+      }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            // Mexer nas legendas do grafico (através da biblioteca Chart.js)
+            legend: {
+                position: 'right',
+                labels: {
+                    font: {
+                        family: 'Poppins'
+                    },
+                    boxWidth: 20,
+                    padding: 15
+                }
+            },
+        }
+    }
+  });
+
+</script>
+</html>
