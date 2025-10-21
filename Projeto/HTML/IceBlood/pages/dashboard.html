@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="../assets/img/dashboard/logo.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2/dist/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
     <header>
@@ -39,14 +40,14 @@
                     <p>5 alertas</p>
                 </div>
                 <div class="card">
-                    <h3>Economia Financeira</h3>
+                    <h3>Temperatura Média</h3>
                     <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
-                    <p>R$: 5000,00</p>
+                    <p>5 ºC</p>
                 </div>
                 <div class="card">
-                    <h3>Fora da faixa ideal</h3>
+                    <h3>Status</h3>
                     <img src="../assets/img/dashboard/ArrowRise.png" alt="Icone de flecha para cima">
-                    <p>30 min</p>
+                    <p>Normal</p>
                 </div>
             </div>
             
@@ -99,6 +100,24 @@
                 display: true,
                 position: 'top',
             },
+            annotation: {
+                    annotations: {
+                        tempAlertaMin: {
+                            type: 'line',
+                            yMin: 2,
+                            yMax: 2,
+                            borderColor: 'rgba(208, 94, 24, 1)',
+                            borderWidth: 3,
+                        },
+                        tempAlertaMax: {
+                            type: 'line',
+                            yMin: 6,
+                            yMax: 6,
+                            borderColor: 'rgba(208, 94, 24, 1)',
+                            borderWidth: 3,
+                        }
+                    }
+                }
         },
       scales: {
         y: {
