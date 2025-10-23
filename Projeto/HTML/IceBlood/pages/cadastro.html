@@ -14,32 +14,28 @@
 </head>
 
 <body>
-    <Div class="container-back">
-        <!--   -->
+    <div class="container-back">
         <button class="botao-back">
             <a href="../pages/institucional.html">
                 <i class='bxr  bx-arrow-left-stroke' style="color: white; transform: scale(2);" ></i> 
             </a>
         </button>
-    </Div>
-    <!-- Div grande bloco termina somente no final -->
+    </div>
     <div class="container">
-        <!-- Div Ler, Bloco Vermelho -->
-
         <div class="left-box">
             <h3>Bem-vindo de volta!</h3>
             <br>
             <p> Acesse sua conta:</p>
             <br><br>
             
-                <button onclick="window.location.href='../pages/login.html'" class="entrar">
-                    Entrar
+                <button class="entrar">
+                    <a href="../pages/login.html">
+                        Entrar
+                    </a>
                 </button>
             
             <br><br><br><br>    
         </div>
-
-        <!-- Div Para Preencher, Bloco branco -->
         <div class="right-box">
             <h2><b>Cadastre-se</b></h2><br>
 
@@ -49,10 +45,10 @@
                 <input type="text" placeholder="Digite aqui..." class="nome"><br>
             </div> <br>
 
-            <span class="label-input">CNPJ: </span>
+            <span class="label-input">CPF: </span>
             <div class="container-input">
                 <i class='bx  bx-scroll' style="transform: scale(2);">  </i>
-                <input type="text" placeholder="Digite aqui..." class="cnpj"><br>
+                <input type="text" placeholder="Digite aqui..." class="cpf"><br>
             </div> <br>
 
             <span class="label-input">Email: </span>
