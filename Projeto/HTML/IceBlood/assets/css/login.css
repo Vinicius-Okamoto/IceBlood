@@ -1,3 +1,9 @@
+:root {
+    --main: #70160e;
+    --secundaria: #89030f;
+    --terciaria: #B9030F;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -26,17 +32,22 @@ body {
     align-items: center;
     padding: 15px;
 }
+
 .botao-back {
     display: flex;
-    flex-direction: center;
     justify-content: center;
     align-items: center;
-    width: 80px;
-    height: 40px;
-    border: 40px;
-    border-radius: 25px;
-    background-color: rgb(112, 22, 14) ;
-    font-size: 20px;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--main);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.botao-back:hover{
+    background-color: var(--secundaria);
 }
 
 .container {
@@ -58,7 +69,7 @@ body {
     align-items: center;
     height: 80vh;
     width: 70%;
-    background: rgb(112, 22, 14);
+    background: var(--main);
     border: 2px solid black;
     border-radius: 16px;
     color: white;
@@ -83,7 +94,7 @@ body {
     outline: 2px solid white;
     border-radius: 25px;
     border-color: white;
-    background-color: rgb(112, 22, 14);
+    background-color: var(--main);
     font-size: clamp(1rem, 2vw, 1.2rem);
     color: white;
     cursor: pointer;
@@ -91,7 +102,13 @@ body {
 
 .entrar a{
     text-decoration: none;
+    padding: 0; 
+    color: white;
+}
 
+.entrar:hover{
+    background-color: var(--terciaria);
+    color: white;
 }
 
 .right-box{
@@ -138,16 +155,21 @@ font-weight: bold;
     padding: 1%;
 }
 
-.cadastrar{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    height: 40px;
-    border: 40px;
+.cadastrar {
+    width: 150px;
+    height: 45px;
+    border: none;
     border-radius: 25px;
-    background-color: rgb(112, 22, 14);
-    font-size: clamp(0.8rem, 1.8vw, 1.0rem);
     color: white;
+    background-color: var(--main);
+    font-size: 1rem;
     cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: 500;
+}
+.cadastrar:hover {
+    background-color: var(--terciaria);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var black;
 }
