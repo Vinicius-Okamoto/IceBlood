@@ -16,6 +16,7 @@
 body {
     max-width: 100vw;
     overflow-x: hidden;
+    margin-top: 100px;
 }
 
 .main-content-wrapper {
@@ -25,9 +26,13 @@ body {
 }
 
 .header {
-    margin-top: 1.5rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /*estou garantindo que o header fique acima de todos os elementos (carlos) */
     padding: 0 4vw;
-    display: ;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffff;
 }
 
 .header nav ul {
@@ -176,6 +181,7 @@ body {
 .container1 button a{
     text-decoration: none;
     color: white;
+    font-size: 80%;
 }
 
 .container1 button:hover {
@@ -482,18 +488,18 @@ body {
     cursor: pointer;
 }
 
-.footer {
+footer {
     width: 100%;
     height: auto;
     padding: 3rem 4vw;
-    background-color: #e0e0e0;
+    background-color: #f7f7f7;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
 
-.caixa-footer {
+footer .caixa-footer {
     width: 100%;
     max-width: var(--max-content-width);
     display: flex;
@@ -504,7 +510,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.footer-logo {
+footer .footer-logo {
     width: 20%;
     min-width: 150px;
     flex-grow: 1;
@@ -514,28 +520,28 @@ body {
     flex-direction: column;
 }
 
-.footer-logo img {
+footer .footer-logo img {
     width: 100%;
     max-width: 150px;
     margin: 0;
     opacity: 80%;
 }
 
-.footer-info {
+footer .footer-info {
     width: 40%;
     min-width: 280px;
     flex-grow: 2;
     padding: 0;
 }
 
-.footer-info h4 {
+footer .footer-info h4 {
     color: var(--main);
     font-size: clamp(1rem, 1.8vw, 1.25rem);
     font-weight: 600;
     margin-bottom: 0.75rem;
 }
 
-.footer-info p {
+footer .footer-info p {
     text-align: justify;
     padding: 0;
     font-size: clamp(0.85rem, 1.2vw, 0.95rem);

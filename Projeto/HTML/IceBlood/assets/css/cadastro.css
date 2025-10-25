@@ -2,6 +2,7 @@
     --main: #70160e;
     --secundaria: #89030f;
     --terciaria: #B9030F;
+    --fundo-geral: #f5f5f5;
 }
 
 * {
@@ -18,7 +19,6 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: transparent;
 }
 
 .container-back {
@@ -41,9 +41,8 @@ body {
 }
 
 .botao-back:hover{
-    background-color: var(--main);
+    background-color: var(--secundaria);
 }
-
 .container {
     display: flex;
     justify-content: flex-start;
@@ -128,7 +127,7 @@ font-weight: bold;
 }
 
 .nome,
-.cpf,
+.token,
 .email,
 .senha{
     width: 100%;
@@ -169,4 +168,50 @@ font-weight: bold;
     background-color: var(--secundaria);
     transform: translateY(-2px);
     box-shadow: 0 4px 10px var black;
+}
+
+#cadastro-realizado{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+#cadastro-realizado h2{
+    color: var(--main);
+    margin-bottom: 15px;
+}
+
+#cadastro-realizado .botao-realizado{
+    display: block;
+    background-color: var(--main);
+    color: white;
+    padding: 10px 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#cadastro-realizado .botao-realizado:hover {
+    background-color: var(--secundaria);
+}
+
+.mensagem-erro{
+    display: block; 
+    color: var(--terciaria);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    width: 58%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
