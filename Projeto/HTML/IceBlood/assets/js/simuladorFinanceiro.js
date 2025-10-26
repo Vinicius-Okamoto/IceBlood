@@ -40,7 +40,7 @@ function publico() {
     
     while (nome === '' || qtdBolsa <= 0 || selectPeriodo === '') {
         div_resultado.innerHTML = '<p>Por favor, preencha o nome, a quantidade e selecione o período!<p/>';
-        break;    
+        return;    
     }
 
     if (selectPeriodo == 'mensal') {
