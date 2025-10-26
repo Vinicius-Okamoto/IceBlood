@@ -314,7 +314,7 @@ body {
 
 .calculadora {
     margin: 4rem auto;
-    padding: 0 4vw;
+    padding: 0 0vw;
     max-width: var(--max-content-width);
     display: flex;
     flex-direction: column;
@@ -343,7 +343,7 @@ body {
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    width: 45%;
+    width: 40%;
     min-width: 300px;
     flex-grow: 1;
     margin: 0;
@@ -398,18 +398,39 @@ body {
 }
 
 .resultado {
-    padding: 2.5rem;
-    width: 45%;
+    padding: 2rem;
+    width: 50%;
     min-width: 300px;
     flex-grow: 1;
     background-color: #e0e0e0;
     color: rgb(56, 56, 56);
     border-radius: 30px;
     text-align: left;
-    font-weight: 800;
-    font-size: clamp(1rem, 1.8vw, 1.1rem);
+    font-weight: 600;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
     line-height: 1.8;
 }
+
+
+.resultado b{
+    line-height: 3rem;
+}
+.resultado p{
+    line-height: 2.3rem;
+}
+.resultado .fonte{
+    font-size: 0.8rem;
+}
+.resultado i{
+   font-size: 1.5rem;
+}
+
+.resultado .final{
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 0;
+}
+
 
 .contato {
     margin: 4rem auto;

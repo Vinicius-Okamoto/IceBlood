@@ -177,37 +177,8 @@
     </footer>
     
 </body>
-<script>
-    var perda = 500;
-    function publico() {
-        var nome = iptNome.value;
-        var qtdBolsa = Number(iptQuantidade.value);
-        var selectPerdas = tipoGasto.value;
-
-        var prejuizoBolsa = qtdBolsa * 0.20;
-        var prejuizoFinanceiro = prejuizoBolsa * 500;
-
-        var prejuizoBolsaAnual = prejuizoBolsa * 12;
-        var prejuizoFinanceiroAnual = prejuizoFinanceiro * 12;
-
-        var diminuirPerdasMensal = qtdBolsa * 0.10;
-        var diminuirPrejuizoMensal = prejuizoFinanceiro - (diminuirPerdasMensal * 500);
-
-        var diminuirPerdasAnual = diminuirPerdasMensal * 12;
-        var diminuirPrejuizoAnual = diminuirPrejuizoMensal * 12;
-
-        if (nome == '' && qtdBolsa <= 0) {
-            alert('Insira valores válidos!');
-        } else {
-            if (selectPerdas == 'mensal') {
-                div_resultado.innerHTML = `Olá, ${nome}! <br> Sem o nosso sistema, sua empresa perderia aproxidamente <b style= "color: red;">${prejuizoBolsa}</b> bolsas mensais, gerando um prejuizo de <b style= "color: red;">R$${prejuizoFinanceiro.toFixed(2)}</b>. <br>  Com o nosso sistema, a sua empresa terá uma redução de 10% com base na quantidade de bolsas armazenadas, resultando em apenas <b style= "color: green;">${diminuirPerdasMensal}</b> bolsas perdidas, gerando uma economia de <b style= "color: green;">R$${diminuirPrejuizoMensal}</b> mensais.`
-            } else if (selectPerdas == 'anual') {
-                div_resultado.innerHTML = `Olá, ${nome}! <br> Sem o nosso sistema, sua empresa perderia aproximadamente <b style= "color: red;">${prejuizoBolsaAnual}</b> bolsas anuais, gerando um prejuizo de <b style= "color: red;">R$${prejuizoFinanceiroAnual.toFixed(2)}</b>.<br> Com o nosso sistema, a sua empresa terá uma redução de 10% com base na quantidade de bolsas armazenadas, resultando em apenas <b style= "color: green;">${diminuirPerdasAnual}</b> bolsas perdidas, gerando uma economia de <b style= "color: green;">R$${diminuirPrejuizoAnual}</b> anuais.`
-            } else {
-                alert('Selecione uma opção válida!');
-            }
-        }
-    }
+<script src="../assets/js/simuladorFinanceiro.js">
+    
 </script>
 
 </html>
