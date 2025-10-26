@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="./image/logoLifeSense.png">
+    <link rel="stylesheet" href="simulador.css">
+    <title>LifeSense</title>
+</head>
+
+<body>
+     <header class="header">
+
+        <nav>
+            <ul>
+                <li><img src="/img/Institucional/lifesense.png" alt=""></li>
+                <li><a href="">Home</a></li>
+                <li><a href="#sobre">Sobre nós</a></li>
+                <li><a href="#iceblood">IceBlood</a></li>
+                <li><a href="#doacao">Doação</a></li>
+                <li><a href="#contatos">Contatos</a></li>
+                <li><a href="../pages/login.html"><img src="" alt="">Entre</a> ou <a href="../pages/cadastro.html">cadastre-se</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content-wrapper">
+    <section>
+
+        <section class="calculadora" id="calculadora">
+        <h2>Simulador Financeiro</h2>
+
+        <div class="calculadora-caixa">
+
+            <div class="inserir"> 
+                <h4>Insira o nome da sua empresa</h4>
+                <input type="text" id="iptNome">
+
+                <h4>Digite a quantidade de bolsas que você precisa guardar:</h4>
+                <input type="number" id="iptQuantidade">
+
+                <select name="" id="tipoGasto">
+                    <option value="">Tipo de visualização</option>
+                    <option value="mensal">Mensal</option>
+                    <option value="anual">Anual</option>
+                </select>
+
+                <button onclick="publico()"><a href="#div_resultado">calcular</a></button>
+            </div>
+
+            <div class="resultado" id="div_resultado">
+        
+            </div>
+        </div>
+    </section>
+
+</section>
+
+<div id="div_msg"></div>
+
+</main>
+</body>
+<script src="script.js"></script>
+
+</html>
