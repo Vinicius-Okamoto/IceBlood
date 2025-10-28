@@ -43,7 +43,7 @@ function acessar() {
     }
     if (erro == 0) {
         if (senha == senhaCorreta && email == emailCorreto) {
-            window.location.href = '../pages/dashboard.html';
+            window.location.href = '../pages/macroDash.html';
         }
         else {
             erroSenha.innerHTML = 'Senha ou email incorretos';
