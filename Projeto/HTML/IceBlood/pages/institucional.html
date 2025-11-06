@@ -107,10 +107,10 @@
             </div>
         </section>
 
-        <section class="calculadora" id="calculadora">
+  <section class="calculadora" id="calculadora">
             <h2>Calculadora Financeira</h2>
             <div class="calculadora-caixa">
-                <div class="inserir"> 
+                <div class="inserir">
                     <h4>Insira o nome da sua empresa:</h4>
                     <input type="text" id="iptNome">
                     <h4>Digite a quantidade de bolsas que você precisa guardar:</h4>
@@ -120,10 +120,14 @@
                         <option value="mensal">Mensal</option>
                         <option value="anual">Anual</option>
                     </select>
-                    <button onclick="publico()">calcular</button>
-                </div>
-                <div class="resultado" id="div_resultado">
+                    <div>
+                        <a href="#div_resultado"><button onclick="mostrar()">
+                                Calcular</button></a>
                     </div>
+
+                </div>
+            </div>
+            <div class="resultado" id="div_resultado">
             </div>
         </section>
 
