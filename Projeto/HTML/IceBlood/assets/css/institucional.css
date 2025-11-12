@@ -25,6 +25,17 @@ body {
     padding: 0 4vw;
 }
 
+.botao-principal {
+    background-color: #70160e;
+    color: #ffff;
+    border-radius: 5px;
+    border: 10px;
+}
+
+.botao-principal:hover {
+    background-color:#89030f;
+}
+
 .header {
     position: fixed;
     top: 0;
@@ -172,7 +183,7 @@ body {
     color: white;
     font-size: clamp(1rem, 2vw, 1.25rem);
     font-weight: 800;
-    border-radius: 30px;
+    border-radius: 15px;
     align-self: flex-start;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -253,7 +264,7 @@ body {
 
 .img3 img {
     width: 100%;
-    max-width: 350px;
+    max-width: 300px;
     height: auto;
 }
 
@@ -388,27 +399,33 @@ body {
     background-color: var(--main);
     color: aliceblue;
     border: none;
-    border-radius: 28px;
-    width: 60%;
-    max-width: 250px;
+    border-radius: 15px;
+    width: 300px;
     padding: 0.75rem 1.5rem;
     font-size: clamp(1rem, 2vw, 1.25rem);
     font-weight: 700;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
+
+.inserir button:hover {
+    background-color: var(--secundaria);
+}
+
 
 .resultado {
     padding: 2rem;
-    width: 50%;
+    width: 100%;
     min-width: 300px;
     flex-grow: 1;
-    background-color: #e0e0e0;
-    color: rgb(56, 56, 56);
-    border-radius: 30px;
+    background-color: #f7f7f7;
+    color: #000;
+    border-radius: 15px;
     text-align: left;
     font-weight: 600;
     font-size: clamp(1rem, 1.5vw, 1.2rem);
     line-height: 1.8;
+    display: none;
 }
 
 
@@ -431,6 +448,28 @@ body {
     line-height: 0;
 }
 
+.resultado button{
+    background-color: var(--main);
+    color: #ffff;
+    border: none;
+    border-radius: 15px;
+    width: 100%;
+    padding: 0.75rem 2rem;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+}
+
+.resultado button:hover {
+    background-color: var(--secundaria);
+}
+
+.resultado button a{
+    text-decoration: none;
+    color: #ffff;
+}
 
 .contato {
     margin: 4rem auto;
@@ -507,6 +546,12 @@ body {
     font-size: clamp(1rem, 2vw, 1.2rem);
     font-weight: 700;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+.email button:hover {
+    background-color: var(--secundaria);
 }
 
 footer {
