@@ -1,0 +1,193 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box; 
+}
+
+:root {
+    --cor-primaria: #B9030F;        
+    --cor-secundaria: #70160E;      
+    --cor-acento: #FFC300;          
+    --cor-fundo: #F8F9FA;           
+    --cor-superficie: #FFFFFF;      
+    --cor-texto-principal: #212529; 
+    --cor-texto-claro: #495057;     
+    --cor-sombra-suave: rgba(0, 0, 0, 0.08); 
+    
+    --espacamento-lg: 2rem;
+    --espacamento-md: 1.5rem;
+    --espacamento-sm: 1rem;
+    
+    --raio-borda-md: 12px;
+    --raio-borda-lg: 0.75rem; 
+    --raio-borda-pill: 1rem; 
+    
+    --cor-texto: #333333;
+    --cor-subtexto: #6c757d;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    font-size: 16px;
+    background-color: var(--cor-fundo);
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: var(--espacamento-md);
+}
+
+header{
+    display: flex;
+    background-color: var(--cor-secundaria);
+    color: var(--cor-superficie);
+    position: sticky;
+    width: clamp(180px, 15%, 250px); 
+    height: 100vh;
+    top: 0;
+    flex-shrink: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+header #header-left{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: var(--espacamento-md); 
+    padding-top: var(--espacamento-lg); 
+    flex-direction: column;
+}
+
+header #header-left img{
+    width: 100%; 
+    max-width: 300px;
+    height: auto;
+    margin-bottom: var(--espacamento-sm); 
+}
+
+header #header-left h1{
+    color: var(--cor-superficie);
+    font-size: clamp(1.4rem, 1.8vw, 1.8rem);
+    text-align: center;
+    margin-bottom: var(--espacamento-lg); 
+}
+
+header #header-left nav {
+    width: 100%;
+    flex-grow: 1;
+}
+
+header #header-left nav ul{
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+header #header-left nav ul li{
+    margin-bottom: 0.5rem;
+}
+
+header #header-left nav ul li a{
+    color: var(--cor-superficie);
+    text-decoration: none;
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    display: block;
+    padding: 0.5rem var(--espacamento-sm);
+    border-radius: var(--raio-borda-md);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header #header-left nav ul li a:hover,
+header #header-left nav ul li a.active{
+    background-color: var(--cor-primaria);
+    font-weight: 600;
+}
+
+.historico-container-tabela {
+    flex-grow: 1;
+    padding: var(--espacamento-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cor-fundo);
+}
+
+.titulo-historico {
+    color: var(--cor-secundaria);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: var(--espacamento-lg);
+}
+
+.historico-card-tabela {
+    background-color: var(--cor-superficie);
+    border-radius: var(--raio-borda-md);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    max-width: 1200px;
+    overflow: hidden; 
+}
+
+.header-tabela, .item-tabela {
+    display: grid;
+    grid-template-columns: minmax(100px, 1.5fr) minmax(150px, 2.5fr) minmax(120px, 1.5fr) minmax(80px, 1fr);
+    align-items: center;
+    overflow-x: hidden; 
+}
+
+.header-tabela {
+    color: var(--cor-subtexto);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: var(--espacamento-md) var(--espacamento-lg);
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.item-tabela {
+    color: var(--cor-texto);
+    font-size: 1rem;
+    padding: 0;
+    min-height: 3.5rem;
+    background-color: var(--cor-superficie);
+}
+
+.item-tabela:nth-child(even) {
+    background-color: #F7F7F7; 
+}
+
+.item-tabela span {
+    padding: var(--espacamento-md) var(--espacamento-lg);
+    display: flex; 
+    align-items: center;
+    height: 100%;
+    white-space: nowrap; 
+    overflow: hidden;    
+    text-overflow: ellipsis; 
+}
+
+.item-tabela span:last-child {
+    justify-content: flex-end; 
+    white-space: normal; 
+    overflow: visible; 
+    text-overflow: clip; 
+}
+
+.status-faixa {
+    justify-content: center; 
+    padding: 0.5rem 1rem; 
+    font-weight: 600;
+    font-size: 0.95rem; 
+    text-transform: uppercase;
+    color: var(--cor-primaria); 
+    height: auto; 
+    width: fit-content;
+    min-width: 90px;
+    margin: 0; 
+}
