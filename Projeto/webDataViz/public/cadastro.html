@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IceBlood</title>
+    <link rel="stylesheet" href="./css/cadastro.css">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="shortcut icon" href="./assets/imgs/logo.png" type="image/x-icon">
+    <script src=".js/cadastro.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-back">
+        <button class="botao-back">
+            <a href="./institucional.html">
+                <i class='bxr  bx-arrow-left-stroke' style="color: white; transform: scale(2);"></i>
+            </a>
+        </button>
+    </div>
+    <div class="container">
+        <div class="left-box">
+            <h3>Bem-vindo de volta!</h3>
+            <br>
+            <p> Acesse sua conta:</p>
+            <br>
+            <button class="entrar">
+                <a href="./login.html">
+                    Entrar
+                </a>
+            </button>
+        </div>
+        <div class="right-box">
+            <h2><b>Cadastre-se</b></h2>
+            <span class="label-input">Nome: </span>
+            <div class="container-input">
+                <i class='bx  bx-user' style="transform: scale(2);"> </i>
+                <input type="text" placeholder="Digite aqui..." class="nome" id="ipt_nome">
+            </div>
+            <div id="erro_nome" class="mensagem-erro"></div>
+            <span class="label-input">Email: </span>
+            <div class="container-input">
+                <i class='bx  bx-envelope-open' style="transform: scale(2);"> </i>
+                <input type="email" placeholder="Digite aqui..." class="email" id="ipt_email">
+            </div>
+            <div id="erro_email" class="mensagem-erro"></div>
+            <span class="label-input">Senha: </span>
+            <div class="container-input">
+                <i class='bx  bx-lock-keyhole-open' style="transform: scale(2);"> </i>
+                <input type="password" placeholder="Digite aqui..." class="senha" id="ipt_senha">
+            </div>
+            <div id="erro_senha" class="mensagem-erro"></div>
+            <span class="label-input">Confirmar Senha: </span>
+            <div class="container-input">
+                <i class='bx  bx-lock-keyhole-open' style="transform: scale(2);"> </i>
+                <input type="password" placeholder="Digite aqui..." class="senha" id="ipt_confirmarSenha">
+            </div>
+            <div id="erro_confirmar-senha" class="mensagem-erro"></div>
+            <span class="label-input">Token: </span>
+            <div class="container-input">
+                <i class='bx  bx-scroll' style="transform: scale(2);"> </i>
+                <input type="password" placeholder="Digite aqui..." class="token" id="ipt_token">
+            </div>
+            <div id="erro_token" class="mensagem-erro"></div>
+            <button onclick="cadastrar()" class="cadastrar">Cadastrar</button>
+        </div>
+        <div id="cadastro-realizado">
+            <h2>Cadastro Realizado com Sucesso!</h2>
+            <p>Obrigado por se juntar a LifeSense!</p>
+            <p>Sua conta foi criada. Clique abaixo para acessar o painel de monitoramento IceBlood.</p>
+            <a href="./login.html" class="botao-realizado">Ir para o Login</a>
+        </div>
+    </div>
+</body>
+<script>
+    function cadastrar() {
+        var nomeVar = ipt_nome.value;
+        var emailVar = ipt_email.value;
+        var senhaVar = ipt_senha.value;
+        var confirmacaoSenhaVar = ipt_confirmarSenha.value;
+        var codigoVar = ipt_token.value;
+
+        var idEmpresaVincular;
+
+        // Verificando se há algum campo em branco
+        if (
+            nomeVar == "" ||
+            emailVar == "" ||
+            senhaVar == "" ||
+            confirmacaoSenhaVar == "" ||
+            codigoVar == "" ||
+            cpfVar == ""
+        ) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML =
+                "(Mensagem de erro para todos os campos em branco)";
+
+            finalizarAguardar();
+            return false;
+        } else {
+            setInterval(sumirMensagem, 5000);
+        }
+
+        if (nomeVar.length < 1) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "(Nome menor que 1 caractere)";
+            finalizarAguardar();
+            return false;
+        } if (emailVar.includes('@')) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "(Email deve conter @)";
+            finalizarAguardar();
+            return false;
+        } if (senhaVar.lenght <= 6) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "(Senha deve ter no mínimo 6 caracteres)";
+            finalizarAguardar();
+            return false;
+        } else {
+            setInterval(sumirMensagem, 5000);
+        }
+
+        // Verificando se o código de ativação é de alguma empresa cadastrada
+        for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+            if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
+                idEmpresaVincular = listaEmpresasCadastradas[i].id
+                console.log("Código de ativação válido.");
+                break;
+            } else {
+                cardErro.style.display = "block";
+                mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+                finalizarAguardar();
+            }
+        }
+
+        // Enviando o valor da nova input
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                nomeServer: nomeVar,
+                emailServer: emailVar,
+                senhaServer: senhaVar,
+                cpfServer: cpfVar,
+                idEmpresaVincularServer: idEmpresaVincular
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    cardErro.style.display = "block";
+
+                    mensagem_erro.innerHTML =
+                        "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                    setTimeout(() => {
+                        window.location = "login.html";
+                    }, "2000");
+
+                    limparFormulario();
+                    finalizarAguardar();
+                } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                finalizarAguardar();
+            });
+
+        return false;
+    }
+
+    // Listando empresas cadastradas 
+    function listar() {
+        fetch("/empresas/listar", {
+            method: "GET",
+        })
+            .then(function (resposta) {
+                resposta.json().then((empresas) => {
+                    empresas.forEach((empresa) => {
+                        listaEmpresasCadastradas.push(empresa);
+
+                        console.log("listaEmpresasCadastradas")
+                        console.log(listaEmpresasCadastradas[0].codigo_ativacao)
+                    });
+                });
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none";
+    }
+</script>
+
+</html>
