@@ -25,7 +25,6 @@ const serial = async (
             port: 3307 // Inserindo os dados no banco virtualizado
         } 
     ).promise(); 
-
     // lista as portas seriais disponíveis e procura pelo Arduino
     const portas = await serialport.SerialPort.list();
     const portaArduino = portas.find((porta) => porta.vendorId == 2341 && porta.productId == 43);

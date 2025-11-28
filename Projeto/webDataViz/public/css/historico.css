@@ -185,7 +185,7 @@ header #header-left nav ul li a.active{
     font-weight: 600;
     font-size: 0.95rem; 
     text-transform: uppercase;
-    color: var(--cor-primaria); 
+    color: green; 
     height: auto; 
     width: fit-content;
     min-width: 90px;

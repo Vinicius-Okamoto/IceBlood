@@ -10,20 +10,20 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2/dist/chartjs-plugin-annotation.min.js"></script>
 
     <link rel="shortcut icon" href="../assets/img/dashboard/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../assets/css/macroDash.css">
+    <link rel="stylesheet" href=".././css/macroDash.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
         <div id="header-left">
-            <img src="../assets/img/dashboard/logo.png" alt="Logo do IceBlood">
+            <img src=".././assets/imgs/logo.png" alt="Logo do IceBlood">
             <h1>IceBlood</h1>
             <nav>
                 <ul>
-                    <li><a href="../pages/macroDash.html" class="active">Visão Geral</a></li>
-                    <li><a href="../pages/historico.html">Histórico</a></li>
-                    <li><a href="../pages/institucional.html">Sair</a></li>
+                    <li><a href="../dashboard/macroDash.html" class="active">Visão Geral</a></li>
+                    <li><a href=".././dashboard/historico.html">Histórico</a></li>
+                    <li><a href=".././institucional.html">Sair</a></li>
                 </ul>
             </nav>
         </div>
@@ -35,11 +35,11 @@
             <p>Selecione uma câmara para ver o dashboard detalhado ou veja o comparativo abaixo.</p>
 
             <div class="container-camaras">
-                <a href="../pages/camara1.html">
+                <a href="../dashboard/camara1.html">
                     <p>2 ºC</p>
                     <p>Camara 1</p>
                 </a>
-                <a href="../pages/camara2.html">
+                <a href="../dashboard/camara2.html">
                     <p>4 ºC</p>
                     <p>Camara 2</p>
                 </a>
@@ -67,7 +67,7 @@
         // mockei os dados dentro de uma variavel (carlos)
         var mockData = {
             historical: {
-                labels: ['12h', '13h', '14h', '15h', '16h', '17h'],
+                labels: ['04H', '05H', '06H', '07H', '08H', '09H'],
                 camara1: [4.2, 7.5, 4.3, 4.1, 8.0, 4.6],
                 camara2: [3.8, 3.9, 4.0, 7.1, 4.1, 7.2]
             },
