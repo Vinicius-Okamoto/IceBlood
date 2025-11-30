@@ -15,7 +15,7 @@ O **LifeSense** é um projeto inovador voltado para a **saúde e tecnologia**, q
   - Sensor LM35 (monitoramento de temperatura)  
 
 - **Banco de Dados**  
-  - Virtualização em **Ubuntu**  
+  - Virtualização em **Lubuntu**  
   - Integração para armazenamento e análise dos dados coletados  
 
 ---
