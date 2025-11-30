@@ -1,6 +1,11 @@
--- Active: 1757608340081@@127.0.0.1@3306@gamelifesense
-use iceblood
+use iceblood;
 
+-- Criando a tabela Cliente
+CREATE TABLE cliente (
+	idCliente INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(45) NOT NULL UNIQUE,
+    mensagem VARCHAR(150)
+);
 
 -- Criando a tabela Empresa
 CREATE TABLE empresa (
@@ -85,13 +90,3 @@ INSERT INTO camara (fkUnidade, camaraSetor) VALUES
 -- Inserindo dados na tabela SENSOR
 INSERT INTO sensor(fkCamara) VALUES
 (1);
-
-
-select e.nomeFantasia, c.camaraSetor, s.fkCamara as 'Sensor utilizado' 
-    from empresa e 
-        join unidade u on e.idEmpresa = u.fkEmpresa
-        join camara c on u.idUnidade = c.fkUnidade
-        join sensor s on c.idCamara = s.fkCamara
-        join registro r on s.idSensor = r.fkSensor
-    where r.temperatura BETWEEN 2 and 6;
-

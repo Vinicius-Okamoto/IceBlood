@@ -1,3 +1,11 @@
+use iceblood;
+
+-- Criando a tabela Cliente
+CREATE TABLE cliente (
+	idCliente INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(45) NOT NULL UNIQUE,
+    mensagem VARCHAR(150)
+);
 
 -- Criando a tabela Empresa
 CREATE TABLE empresa (
@@ -55,3 +63,4 @@ CREATE TABLE registro (
     fkSensor INT,
         FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)
 );
+
