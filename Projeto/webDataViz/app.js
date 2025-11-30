@@ -19,6 +19,7 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
+var bobIARouter = require("./src/routes/bobIA.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +29,7 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
+app.use("/bobIA", bobIARouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
@@ -45,3 +47,26 @@ app.listen(PORTA_APP, function () {
     \tSe .:producao:. você está se conectando ao banco remoto. \n\n
     \t\tPara alterar o ambiente, comente ou descomente as linhas 1 ou 2 no arquivo 'app.js'\n\n`);
 });
+
+// função para gerar respostas usando o gemini bobAI
+async function gerarResposta(mensagem) {
+
+    try {
+        // gerando conteúdo com base na pergunta
+        const modeloIA = chatIA.models.generateContent({
+            model: "gemini-2.0-flash",
+            contents: `Em um paragráfo responda: ${mensagem}`
+
+        });
+        const resposta = (await modeloIA).text;
+        const tokens = (await modeloIA).usageMetadata;
+
+        console.log(resposta);
+        console.log("Uso de Tokens:", tokens);
+
+        return resposta;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
