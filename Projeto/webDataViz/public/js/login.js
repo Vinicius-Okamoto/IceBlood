@@ -12,44 +12,61 @@ function limparErros() {
     }
 }
 
-function acessar() {
+function entrar() {
     limparErros();
 
-    var emailCorreto = 'iceblood@gmail.com';
-    var senhaCorreta = 'iceblood123';
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
 
-    var email = document.getElementById('iptEmail').value;
-    var senha = document.getElementById('iptSenha').value;
-
-    var erroEmail = document.getElementById('erro_email_login');
-    var erroSenha = document.getElementById('erro_senha_login');
-
-    var erro = 0;
-
-    if (email == '' || !email.includes('@') || !email.includes('.')) {
-        erroEmail.innerHTML = 'Insira um e-mail válido.';
-        erroEmail.style.display = 'block';
-        erro = 1;
-    }
-    if (senha == '') {
-        erroSenha.innerHTML = 'Preencha o campo senha.';
-        erroSenha.style.display = 'block';
-        erro = 1;
-    }
-    if (senha.length < 6) {
-        erroSenha.innerHTML = 'Insira uma senha válida.';
-        erroSenha.style.display = 'block';
-        erro = 1;
-    }
-    if (erro == 0) {
-        if (senha == senhaCorreta && email == emailCorreto) {
-            window.location.href = '../public/dashboard/macroDash.html';
+        if (emailVar == "" || senhaVar == "") {
+            erro_senha_login.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            return false;
         }
         else {
-            erroSenha.innerHTML = 'Senha ou email incorretos';
-            erroSenha.style.display = 'block';
-            erroEmail.innerHTML = 'Senha ou email incorretos';
-            erroEmail.style.display = 'block';
+            setInterval(5000)
         }
-    }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+                    setTimeout(function () {
+                        window.location = "./dashboard/macroDash.html";
+                    }, 1000);
+
+                });
+
+            } else {
+                console.log("Houve um erro ao tentar realizar o login!");
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
 }

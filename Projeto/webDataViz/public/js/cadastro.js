@@ -5,7 +5,7 @@ function limparErros() {
     var erroToken = document.getElementById('erro_token');
     var erroEmail = document.getElementById('erro_email');
     var erroSenha = document.getElementById('erro_senha');
-    var erroConfirmarSenha = document.getElementById('erro_confirmar-senha');
+    var erroConfirmarSenha = document.getElementById('erro_confirmar_senha');
 
     if (erroNome) {
         erroNome.innerHTML = '';
@@ -31,56 +31,78 @@ function limparErros() {
 
 function cadastrar() {
     limparErros();
-    var nome = document.getElementById('ipt_nome').value;
-    var token = document.getElementById('ipt_token').value;
-    var email = document.getElementById('ipt_email').value;
-    var senha = document.getElementById('ipt_senha').value;
-    var confirmarSenha = document.getElementById('ipt_confirmarSenha').value;
+    var nomeVar = ipt_nome.value;
+    var emailVar = ipt_email.value;
+    var senhaVar = ipt_senha.value;
+    var confirmacaoSenhaVar = ipt_confirmarSenha.value;
+    var tokenVar = ipt_token.value;
 
-    var erroNome = document.getElementById('erro_nome');
-    var erroToken = document.getElementById('erro_token');
-    var erroEmail = document.getElementById('erro_email');
-    var erroSenha = document.getElementById('erro_senha');
-    var erroConfirmarSenha = document.getElementById('erro_confirmar-senha');
-
-    var erro = 0;
-
-    if (nome === '') {
-        erroNome.innerHTML = 'Preencha o campo nome.';
-        erroNome.style.display = 'block';
-        erro = 1;
-    }
-    if (token === '') {
-        erroToken.innerHTML = 'Preencha o campo token.';
-        erroToken.style.display = 'block';
-        erro = 1;
-    }
-    if (email === '' || !email.includes('@') || !email.includes('.')) {
-        erroEmail.innerHTML = 'Insira um e-mail válido.';
-        erroEmail.style.display = 'block';
-        erro = 1;
-    }
-    if (senha === '') {
-        erroSenha.innerHTML = 'Preencha o campo senha.';
-        erroSenha.style.display = 'block';
-        erro = 1;
-    } else if (senha.length < 6) {
-        erroSenha.innerHTML = 'A senha deve ter pelo menos 6 caracteres.';
-        erroSenha.style.display = 'block';
-        erro = 1;
-    }
-    if (confirmarSenha === '') {
-        erroConfirmarSenha.innerHTML = 'Preencha o campo confirmar senha.';
-        erroConfirmarSenha.style.display = 'block';
-        erro = 1;
-    } else if (senha !== confirmarSenha) { 
-        erroConfirmarSenha.innerHTML = 'As senhas estão diferentes.';
-        erroConfirmarSenha.style.display = 'block';
-        erro = 1;
+    if (
+        nomeVar == "" ||
+        emailVar == "" ||
+        senhaVar == "" ||
+        confirmacaoSenhaVar == "" ||
+        tokenVar == ""
+    ) {
+        mensagem_erro.innerHTML = "Preencha todos os campos.";
+        return false;
+    } else {
+        setInterval(5000);
     }
 
-    if (erro === 0) {
-        document.getElementById('cadastro-realizado').style.display = 'flex';
+    if (nomeVar.length < 1) {
+        erro_nome.innerHTML = "Nome menor que 1 caractere.";
+        erro_nome.style.display = 'block';
+        return false;
+    } if (!emailVar.includes('@')) {
+        erro_email.innerHTML = "Email deve conter @.";
+        erro_email.style.display = 'block';
+        return false;
+    } if (senhaVar.length < 6) {
+        erro_senha.innerHTML = "A senha deve conter no mínimo 6 caracteres."
+        erro_senha.style.display = 'block';
+        return false;
+    } if (senhaVar !== confirmacaoSenhaVar) {
+        erro_confirmarSenha.innerHTML = "As senhas não coincidem.";
+        erro_confirmarSenha.style.display = 'block';
+        return false;
+    } if (tokenVar.length < 3) {
+        erro_token.innerHTML = "Token inválido.";
+        erro_token.style.display = "block";
+        return false;
+    }
+    else {
+        setInterval(5000);
     }
 
+    fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+            fkUnidadeServer: tokenVar
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+                mensagem_erro.innerHTML =
+                    "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                setTimeout(() => {
+                    window.location = "login.html";
+                }, "2000");
+            } else {
+                throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    return false;
 }

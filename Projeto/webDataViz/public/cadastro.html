@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="shortcut icon" href="./assets/imgs/logo.png" type="image/x-icon">
-    <script src=".js/cadastro.js"></script>
+    <script src="./js/cadastro.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -43,31 +43,31 @@
                 <i class='bx  bx-user' style="transform: scale(2);"> </i>
                 <input type="text" placeholder="Digite aqui..." class="nome" id="ipt_nome">
             </div>
-            <div id="erro_nome" class="mensagem-erro"></div>
+            <div id="erro_nome" class="mensagem_erro"></div>
             <span class="label-input">Email: </span>
             <div class="container-input">
                 <i class='bx  bx-envelope-open' style="transform: scale(2);"> </i>
                 <input type="email" placeholder="Digite aqui..." class="email" id="ipt_email">
             </div>
-            <div id="erro_email" class="mensagem-erro"></div>
+            <div id="erro_email" class="mensagem_erro"></div>
             <span class="label-input">Senha: </span>
             <div class="container-input">
                 <i class='bx  bx-lock-keyhole-open' style="transform: scale(2);"> </i>
                 <input type="password" placeholder="Digite aqui..." class="senha" id="ipt_senha">
             </div>
-            <div id="erro_senha" class="mensagem-erro"></div>
+            <div id="erro_senha" class="mensagem_erro"></div>
             <span class="label-input">Confirmar Senha: </span>
             <div class="container-input">
                 <i class='bx  bx-lock-keyhole-open' style="transform: scale(2);"> </i>
                 <input type="password" placeholder="Digite aqui..." class="senha" id="ipt_confirmarSenha">
             </div>
-            <div id="erro_confirmar-senha" class="mensagem-erro"></div>
+            <div id="erro_confirmar_senha" class="mensagem_erro"></div>
             <span class="label-input">Token: </span>
             <div class="container-input">
                 <i class='bx  bx-scroll' style="transform: scale(2);"> </i>
                 <input type="password" placeholder="Digite aqui..." class="token" id="ipt_token">
             </div>
-            <div id="erro_token" id="mensagem-erro"></div>
+            <div id="erro_token" class="mensagem_erro"></div>
             <button onclick="cadastrar()" class="cadastrar">Cadastrar</button>
         </div>
         <div id="cadastro-realizado">
@@ -79,71 +79,6 @@
     </div>
 </body>
 <script>
-    function cadastrar() {
-        var nomeVar = ipt_nome.value;
-        var emailVar = ipt_email.value;
-        var senhaVar = ipt_senha.value;
-        var confirmacaoSenhaVar = ipt_confirmarSenha.value;
-        var codigoVar = ipt_token.value;
-
-        if (
-            nomeVar == "" ||
-            emailVar == "" ||
-            senhaVar == "" ||
-            confirmacaoSenhaVar == "" ||
-            codigoVar == ""
-        ) {
-            mensagem_erro.innerHTML =
-                "(Mensagem de erro para todos os campos em branco)";
-            return false;
-        } else {
-            setInterval(5000);
-        }
-
-        if (nomeVar.length < 1) {
-            mensagem_erro.innerHTML = "(Nome menor que 1 caractere)";
-            return false;
-        } if (emailVar.includes('@')) {
-            mensagem_erro.innerHTML = "(Email deve conter @)";
-            return false;
-        } if (senhaVar.lenght <= 6) {
-            mensagem_erro.innerHTML = "(Senha deve ter no mínimo 6 caracteres)";
-            return false;
-        } else {
-            setInterval(5000);
-        }
-
-        fetch("/usuarios/cadastrar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                nomeServer: nomeVar,
-                emailServer: emailVar,
-                senhaServer: senhaVar,
-                codigoServer: codigoVar
-            }),
-        })
-            .then(function (resposta) {
-                console.log("resposta: ", resposta);
-
-                if (resposta.ok) {
-                    mensagem_erro.innerHTML =
-                        "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-                    setTimeout(() => {
-                        window.location = "login.html";
-                    }, "2000");
-                } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-            })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-            });
-        return false;
-    }
 </script>
 
 </html>
