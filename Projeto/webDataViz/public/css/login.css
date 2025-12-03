@@ -172,7 +172,7 @@ font-weight: bold;
     box-shadow: 0 4px 10px var black;
 }
 
-.mensagem-erro{
+.mensagem_erro{
     display: none; 
     color: var(--terciaria);
     font-size: 0.7rem;
