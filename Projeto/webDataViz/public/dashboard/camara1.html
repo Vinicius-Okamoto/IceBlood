@@ -147,7 +147,7 @@
         atualizarKPIs(resposta);
         console.log("Labels:", labels);
         console.log("Temperaturas:", temperaturas);
-    let graficoTemperatura;
+        let graficoTemperatura;
 
         const ctx = document.getElementById('temperatureChart');
 
@@ -292,28 +292,28 @@
     }
     function atualizarKPIs(dados) {
 
-    if (!dados || dados.length === 0) return;
+        if (!dados || dados.length === 0) return;
 
-    const ultimo = dados[dados.length - 1];
+        const ultimo = dados[dados.length - 1];
 
-    tempAtual.innerHTML = `${ultimo.tempAtual} ºC`;
+        tempAtual.innerHTML = `${ultimo.tempAtual} ºC`;
 
-    let definicao = "Normal";
+        let definicao = "Normal";
 
-    if (ultimo.tempAtual < 2) definicao = "Crítico";
-    if (ultimo.tempAtual > 6) definicao = "Crítico";
+        if (ultimo.tempAtual < 2) definicao = "Crítico";
+        if (ultimo.tempAtual > 6) definicao = "Crítico";
 
-    estado.innerHTML = definicao;
+        estado.innerHTML = definicao;
 
-    const alertas = dados.filter(reg =>
-        reg.tempAtual < reg.tempMin || reg.tempAtual > reg.tempMax
-    ).length;
+        const alertas = dados.filter(reg =>
+            reg.tempAtual < reg.tempMin || reg.tempAtual > reg.tempMax
+        ).length;
 
-    totalAlertas.innerHTML = `${alertas} alertas`;
+        totalAlertas.innerHTML = `${alertas} alertas`;
 
-    const media = (tempAtual * dados.length) / dados.length;
-    tempMedia.innerHTML = `${media.toFixed(1)} ºC`;
-}
+        const media = (tempAtual * dados.length) / dados.length;
+        tempMedia.innerHTML = `${media.toFixed(1)} ºC`;
+    }
 
 </script>
 
