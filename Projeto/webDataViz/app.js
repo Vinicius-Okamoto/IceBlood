@@ -31,7 +31,7 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/bobIA", bobIARouter);
-app.use("/camara1", dashboardRouter);
+app.use("/dashboard", dashboardRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

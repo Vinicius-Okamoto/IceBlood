@@ -1,9 +1,10 @@
 var dashboardModel = require("../models/dashboardModel");
 
 function listarTemperaturas(req, res) {
-    var idSensor = req.params.idSensor;
+    var token = req.params.token;
+    var idCamara = req.params.idCamara;
 
-    dashboardModel.buscarTemperaturas(idSensor)
+    dashboardModel.buscarTemperaturas(token, idCamara)
         .then(resultado => res.json(resultado))
         .catch(erro => {
             console.log("Erro ao carregar temperaturas:", erro);
@@ -11,7 +12,7 @@ function listarTemperaturas(req, res) {
         });
 }
 
-
 module.exports = {
     listarTemperaturas
-}
+};
+

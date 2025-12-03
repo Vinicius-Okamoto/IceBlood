@@ -52,6 +52,8 @@ function entrar() {
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.TOKEN_UNIDADE = json.tokenUnidade;
+
 
                      if (emailVar == `suporte@gmail.com` || emailVar == `suporte2@gmail.com`) {
                          setTimeout(function () {
