@@ -53,15 +53,15 @@ function entrar() {
 
                     // if (emailVar == `suporte@gmail.com` || emailVar == `suporte2@gmail.com`) {
                     //     setTimeout(function () {
-                    //     window.location = "./dashboard/macroDashSuporte.html";
+                    //     window.location = "./dashboard/bobIA.html";
                     // }, 1000);
                     // } else {
                     //     setTimeout(function () {
                         
                     //     window.location = "./dashboard/macroDash.html";
                     // }, 1000);
+                    // }
 
-                    }
                     setTimeout(function () {
                         
                         window.location = "./dashboard/macroDash.html";

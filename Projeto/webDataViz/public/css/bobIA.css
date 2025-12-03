@@ -1,9 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-primaria: #B9030F; 
+    --cor-secundaria: #70160E; 
+    --cor-acento: #FFC300;    
+    --cor-fundo: #F8F9FA;   
+    --cor-superficie: #FFFFFF; 
+    --cor-texto-principal: #212529;
+    --cor-texto-claro: #495057;
+    --cor-sombra-suave: rgba(0, 0, 0, 0.08);
+
+    --espacamento-lg: 2rem;
+    --espacamento-md: 1.5rem;
+    --espacamento-sm: 1rem;
+    --raio-borda-md: 12px;
+}
+
 body {
+    display: flex;
+    min-height: 100vh;
+    font-size: 16px;
+    background-color: var(--cor-fundo);
+}
+
+header{
+    display: flex;
+    background-color: var(--cor-secundaria);
+    color: var(--cor-superficie);
+    position: sticky;  
+    width: clamp(180px, 15%, 250px); 
+    height: 100vh;
+    top: 0;
+    flex-shrink: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+header #header-left{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    padding: var(--espacamento-md);
+    padding-top: var(--espacamento-lg);
+}
+
+header #header-left img{
+    width: 100%; 
+    max-width: 300px;
+    height: auto;
+    margin-bottom: var(--espacamento-sm);
+}
+
+header #header-left h1{
+    color: var(--cor-superficie);
+    font-size: clamp(1.4rem, 1.8vw, 1.8rem);
+    text-align: center;
+    margin-bottom: var(--espacamento-lg);
+}
+
+header #header-left nav {
+    width: 100%;
+    flex-grow: 1;
+}
+
+header #header-left nav ul{
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+header #header-left nav ul li{
+    margin-bottom: 0.5rem;
+}
+
+header #header-left nav ul li a{
+    color: var(--cor-superficie);
+    text-decoration: none;
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    display: block;
+    padding: 0.5rem var(--espacamento-sm);
+    border-radius: var(--raio-borda-md);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header #header-left nav ul li a:hover,
+header #header-left nav ul li a.active{
+    background-color: var(--cor-primaria);
+    font-weight: 600;
+}
+
+
+/* body {
     font-family: Arial, sans-serif;
     background-color: #63B1BC;
     margin: 0;
     padding: 0;
-}
+} */
 
 #container {
     width: 80%;
@@ -31,13 +130,13 @@ button {
 }
 
 button {
-    background-color: #ED145B;
+    background-color: #B9030F;
     color: #FFFFFF;
     border: none;
 }
 
 button:hover {
-    background-color: #EFB661;
+    background-color: #70160E;
 }
 
 #resposta {
