@@ -51,7 +51,19 @@ function entrar() {
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
 
+                    // if (emailVar == `suporte@gmail.com` || emailVar == `suporte2@gmail.com`) {
+                    //     setTimeout(function () {
+                    //     window.location = "./dashboard/macroDashSuporte.html";
+                    // }, 1000);
+                    // } else {
+                    //     setTimeout(function () {
+                        
+                    //     window.location = "./dashboard/macroDash.html";
+                    // }, 1000);
+
+                    }
                     setTimeout(function () {
+                        
                         window.location = "./dashboard/macroDash.html";
                     }, 1000);
 
