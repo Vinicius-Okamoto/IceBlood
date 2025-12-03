@@ -31,159 +31,159 @@
         </div>
     </header>
     <main>
-        <section>
-            <h1>Olá, Empresa 👋</h1>
-            <h2>Bem-vindo ao seu painel de controle</h2>
-            <div class="kpi-cards">
-                <div class="card">
-                    <h3>Temperatura Atual</h3>
-                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para baixo">
-                    <p>4 ºC</p>
-                </div>
-                <div class="card">
-                    <h3>Status</h3>
-                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
-                    <p>Normal</p>
-                </div>
-                <div class="card">
-                    <h3>Total de alertas (Diário)</h3>
-                    <img src=".././assets/imgs/negativo.png" alt="Icone de flecha para baixo">
-                    <p>2 alertas</p>
-                </div>
-                <div class="card">
-                    <h3>Temperatura Média (Diária)</h3>
-                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
-                    <p>5 ºC</p>
-                </div>
+    <section>
+        <h1>Olá, Empresa 👋</h1>
+        <h2>Bem-vindo ao seu painel de controle</h2>
+
+        <div class="kpi-cards">
+
+            <div class="card">
+                <h3>Temperatura Atual</h3>
+                <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para baixo">
+                <p id="tempAtual">-- ºC</p>
             </div>
 
-            <div id="dashboard">
-                <h1>Relatórios de Temperatura</h1>
-                <div class="charts-wrapper">
-                    <div class="chart-container">
-                        <h2>Gráfico de Temperatura</h2>
-                        <canvas id="temperatureChart"></canvas>
-                    </div>
-                    <div class="chart-container-horary">
-                        <h2>Alertas Horários</h2>
-                        <canvas id="horaryChart"></canvas>
-                    </div>
-                </div>
+            <div class="card">
+                <h3>Status</h3>
+                <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
+                <p id="status">--</p>
             </div>
-        </section>
-    </main>
+
+            <div class="card">
+                <h3>Total de alertas (Diário)</h3>
+                <img src=".././assets/imgs/negativo.png" alt="Icone de flecha para baixo">
+                <p id="totalAlertas">-- alertas</p>
+            </div>
+
+            <div class="card">
+                <h3>Temperatura Média (Diária)</h3>
+                <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
+                <p id="tempMedia">-- ºC</p>
+            </div>
+
+        </div>
+
+        <div id="dashboard">
+            <h1>Relatórios de Temperatura</h1>
+
+            <div class="charts-wrapper">
+
+                <div class="chart-container">
+                    <h2>Gráfico de Temperatura</h2>
+                    <canvas id="temperatureChart"></canvas>
+                </div>
+
+                <div class="chart-container-horary">
+                    <h2>Alertas Horários</h2>
+                    <canvas id="horaryChart"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</main>
+
 </body>
 <script>
-    const ctx = document.getElementById('temperatureChart');
 
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['04H', '05H', '06H', '07H', '08H', '09H'],
-            datasets: [{
-                label: 'Temperatura (ºC)',
-                data: [4.2, 8.5, 4.3, 4.1, 8.0, 4.6],
-                borderWidth: 3,
-                borderColor: '#B9030F',
-                backgroundColor: 'rgba(185, 3, 15, 0.1)',
-                fill: true,
-                tension: 0.4,
-                pointRadius: 6,
-                pointHoverRadius: 9,
-                pointBackgroundColor: 'white',
-                pointBorderColor: '#B9030F',
-                pointBorderWidth: 2,
-                pointHoverBackgroundColor: '#B9030F',
-                pointHoverBorderColor: 'white',
-                pointHoverBorderWidth: 3,
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top',
-                },
-                annotation: {
-                    annotations: {
-                        tempAlertaMin: {
-                            type: 'line',
-                            yMin: 2,
-                            yMax: 2,
-                            borderColor: 'rgba(208, 94, 24, 1)',
-                            borderWidth: 3,
-                        },
-                        tempAlertaMax: {
-                            type: 'line',
-                            yMin: 6,
-                            yMax: 6,
-                            borderColor: 'rgba(208, 94, 24, 1)',
-                            borderWidth: 3,
+    function carregarGrafico() {
+        fetch(`/dashboard/temperaturas/${idSensor}`)
+            .then(res => res.json())
+            .then(dados => {
+                let horarios = dados.map(item => item.horario);
+                let temperaturas = dados.map(item => item.temperatura);
+                atualizarGraficoTemperatura(horarios, temperaturas);
+            });
+    }
+
+
+    let graficoTemperatura;
+
+    function atualizarGraficoTemperatura(labels, data) {
+        const ctx = document.getElementById('temperatureChart');
+
+        if (graficoTemperatura) graficoTemperatura.destroy();
+
+        graficoTemperatura = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Temperatura (ºC)',
+                    data: data,
+                    borderWidth: 3,
+                    borderColor: '#B9030F',
+                    backgroundColor: 'rgba(185, 3, 15, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    pointBackgroundColor: 'white',
+                    pointBorderColor: '#B9030F',
+                    pointBorderWidth: 2,
+                    pointHoverBackgroundColor: '#B9030F',
+                    pointHoverBorderColor: 'white',
+                    pointHoverBorderWidth: 3,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top' },
+                    annotation: {
+                        annotations: {
+                            tempAlertaMin: { type: 'line', yMin: 2, yMax: 2, borderColor: 'rgba(208, 94, 24, 1)', borderWidth: 3 },
+                            tempAlertaMax: { type: 'line', yMin: 6, yMax: 6, borderColor: 'rgba(208, 94, 24, 1)', borderWidth: 3 }
                         }
                     }
+                },
+                scales: {
+                    y: { min: 0, max: 10, grid: { color: '#f0f0f0' } },
+                    x: { grid: { display: false } }
                 }
+            }
+        });
+    }
+
+    function carregarGraficoAlertas() {
+        const ctx2 = document.getElementById('horaryChart');
+
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Manhã', 'Tarde', 'Noite'],
+                datasets: [{
+                    label: 'Contagem de Alertas',
+                    data: [8, 10, 6],
+                    backgroundColor: [
+                        'rgba(112, 22, 14, 0.5)',
+                        'rgba(112, 22, 14, 0.7)',
+                        'rgba(112, 22, 14, 1)'
+                    ],
+                    borderWidth: 0
+                }]
             },
-            scales: {
-                y: {
-                    min: 0,
-                    max: 10,
-                    grid: {
-                        color: '#f0f0f0'
-                    },
-                },
-                x: {
-                    grid: {
-                        display: false // Tirei as linhas verticais (chamadas de grid lines) (carlos)
-                    },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { font: { family: 'Poppins' }, boxWidth: 20, padding: 15 }
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
-    const ctx2 = document.getElementById('horaryChart');
+    carregarGrafico();
+    carregarGraficoAlertas();
 
-    new Chart(ctx2, {
-        type: 'doughnut',
-        data: {
-            labels: ['Manhã', 'Tarde', 'Noite'],
-            datasets: [{
-                label: 'Contagem de Alertas',
-                data: [8, 10, 6, 4],
-                backgroundColor: [
-                    'rgba(112, 22, 14, 0.5)',
-                    'rgba(112, 22, 14, 0.7)',
-                    'rgba(112, 22, 14, 1)',
-                ],
-                hoverBackgroundColor: [
-                    'rgba(112, 22, 14, 0.5)',
-                    'rgba(112, 22, 14, 0.7)',
-                    'rgba(112, 22, 14, 1)',
-                ],
-                borderWidth: 0,
-
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                // Mexer nas legendas do grafico (através da biblioteca Chart.js) (carlos)
-                legend: {
-                    position: 'right',
-                    labels: {
-                        font: {
-                            family: 'Poppins'
-                        },
-                        boxWidth: 20,
-                        padding: 15
-                    }
-                },
-            }
-        }
-    });
-
+    setInterval(() => {
+        carregarGrafico();
+        carregarGraficoAlertas();
+    }, 10000);
 </script>
 
 </html>
