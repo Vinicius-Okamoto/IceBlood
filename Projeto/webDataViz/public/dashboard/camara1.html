@@ -31,75 +31,124 @@
         </div>
     </header>
     <main>
-    <section>
-        <h1>Olá, Empresa 👋</h1>
-        <h2>Bem-vindo ao seu painel de controle</h2>
+        <section>
+            <h1>Olá, Empresa 👋</h1>
+            <h2>Bem-vindo ao seu painel de controle</h2>
 
-        <div class="kpi-cards">
+            <div class="kpi-cards">
 
-            <div class="card">
-                <h3>Temperatura Atual</h3>
-                <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para baixo">
-                <p id="tempAtual">-- ºC</p>
-            </div>
-
-            <div class="card">
-                <h3>Status</h3>
-                <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
-                <p id="status">--</p>
-            </div>
-
-            <div class="card">
-                <h3>Total de alertas (Diário)</h3>
-                <img src=".././assets/imgs/negativo.png" alt="Icone de flecha para baixo">
-                <p id="totalAlertas">-- alertas</p>
-            </div>
-
-            <div class="card">
-                <h3>Temperatura Média (Diária)</h3>
-                <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
-                <p id="tempMedia">-- ºC</p>
-            </div>
-
-        </div>
-
-        <div id="dashboard">
-            <h1>Relatórios de Temperatura</h1>
-
-            <div class="charts-wrapper">
-
-                <div class="chart-container">
-                    <h2>Gráfico de Temperatura</h2>
-                    <canvas id="temperatureChart"></canvas>
+                <div class="card">
+                    <h3>Temperatura Atual</h3>
+                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para baixo">
+                    <p id="tempAtual">-- ºC</p>
                 </div>
 
-                <div class="chart-container-horary">
-                    <h2>Alertas Horários</h2>
-                    <canvas id="horaryChart"></canvas>
+                <div class="card">
+                    <h3>Status</h3>
+                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
+                    <p id="estado">--</p>
+                </div>
+
+                <div class="card">
+                    <h3>Total de alertas (Diário)</h3>
+                    <img src=".././assets/imgs/negativo.png" alt="Icone de flecha para baixo">
+                    <p id="totalAlertas">-- alertas</p>
+                </div>
+
+                <div class="card">
+                    <h3>Temperatura Média (Diária)</h3>
+                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
+                    <p id="tempMedia">-- ºC</p>
                 </div>
 
             </div>
-        </div>
-    </section>
-</main>
+
+            <div id="dashboard">
+                <h1>Relatórios de Temperatura</h1>
+
+                <div class="charts-wrapper">
+
+                    <div class="chart-container">
+                        <h2>Gráfico de Temperatura</h2>
+                        <canvas id="temperatureChart"></canvas>
+                    </div>
+
+                    <div class="chart-container-horary">
+                        <h2>Alertas Horários</h2>
+                        <canvas id="horaryChart"></canvas>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
 
 </body>
 <script>
+    let graficoTemperatura;
+    let proximaAtualizacaoTemperatura;
 
-    function carregarGrafico() {
-        fetch(`/dashboard/temperaturas/${idSensor}`)
-            .then(res => res.json())
-            .then(dados => {
-                let horarios = dados.map(item => item.horario);
-                let temperaturas = dados.map(item => item.temperatura);
-                atualizarGraficoTemperatura(horarios, temperaturas);
+    token = 'HT123A';
+    idCamara = 1;
+
+    window.onload = () => {
+        obterDadosTemperatura();
+        carregarGraficoAlertas();
+    };
+
+    function formatarHorario(dataISO) {
+        const data = new Date(dataISO);
+        return data.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+    }
+
+    function obterDadosTemperatura() {
+
+        if (proximaAtualizacaoTemperatura != undefined) {
+            clearTimeout(proximaAtualizacaoTemperatura);
+        }
+
+        fetch(`/dashboard/temperaturas/${token}/${idCamara}`, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) {
+                    console.error("Nenhum dado encontrado ou erro na API.");
+                    return;
+                }
+
+                response.json().then(resposta => {
+
+                    console.log("Dados iniciais recebidos:");
+                    console.log(JSON.stringify(resposta));
+
+                    resposta.reverse();
+
+                    plotarGraficoTemperatura(resposta);
+                });
+            })
+            .catch(error => {
+                console.error("Erro na obtenção dos dados iniciais: " + error.message);
             });
     }
 
+    function plotarGraficoTemperatura(resposta) {
 
-    let graficoTemperatura;
+        console.log("Iniciando plotagem do gráfico de temperatura...");
 
-    function atualizarGraficoTemperatura(labels, data) {
+        let labels = [];
+        let temperaturas = [];
+
+        for (let i = 0; i < resposta.length; i++) {
+            labels.push(formatarHorario(resposta[i].dtHoraAtual));
+            temperaturas.push(resposta[i].tempAtual);
+        }
+        atualizarKPIs(resposta);
+        console.log("Labels:", labels);
+        console.log("Temperaturas:", temperaturas);
+        let graficoTemperatura;
+
         const ctx = document.getElementById('temperatureChart');
 
         if (graficoTemperatura) graficoTemperatura.destroy();
@@ -110,7 +159,7 @@
                 labels: labels,
                 datasets: [{
                     label: 'Temperatura (ºC)',
-                    data: data,
+                    data: temperaturas,
                     borderWidth: 3,
                     borderColor: '#B9030F',
                     backgroundColor: 'rgba(185, 3, 15, 0.1)',
@@ -131,10 +180,27 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: { display: true, position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            title: () => null
+                        }
+                    },
                     annotation: {
                         annotations: {
-                            tempAlertaMin: { type: 'line', yMin: 2, yMax: 2, borderColor: 'rgba(208, 94, 24, 1)', borderWidth: 3 },
-                            tempAlertaMax: { type: 'line', yMin: 6, yMax: 6, borderColor: 'rgba(208, 94, 24, 1)', borderWidth: 3 }
+                            tempAlertaMin: {
+                                type: 'line',
+                                yMin: 2,
+                                yMax: 2,
+                                borderColor: 'rgba(208, 94, 24, 1)',
+                                borderWidth: 3
+                            },
+                            tempAlertaMax: {
+                                type: 'line',
+                                yMin: 6,
+                                yMax: 6,
+                                borderColor: 'rgba(208, 94, 24, 1)',
+                                borderWidth: 3
+                            }
                         }
                     }
                 },
@@ -144,6 +210,54 @@
                 }
             }
         });
+
+        proximaAtualizacaoTemperatura = setTimeout(
+            () => atualizarGraficoTemperatura(labels, temperaturas, graficoTemperatura),
+            2000
+        );
+    }
+
+    function atualizarGraficoTemperatura(labels, temperaturas, grafico) {
+
+        fetch(`/dashboard/temperaturas/${token}/${idCamara}`, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) return;
+
+                response.json().then(novosDados => {
+                    atualizarKPIs(novosDados);
+                    console.log("Dado novo:");
+                    console.log(novosDados);
+
+                    let ultimo = novosDados[novosDados.length - 1];
+
+                    let novoHorario = formatarHorario(ultimo.dtHoraAtual);
+                    let novaTemp = ultimo.tempAtual;
+
+                    if (novoHorario === labels[labels.length - 1]) {
+                        console.log("Mesmo horário do último ponto — sem atualização.");
+                    } else {
+                        labels.shift();
+                        labels.push(novoHorario);
+
+                        temperaturas.shift();
+                        temperaturas.push(novaTemp);
+
+                        grafico.update();
+                    }
+
+                    proximaAtualizacaoTemperatura = setTimeout(
+                        () => atualizarGraficoTemperatura(labels, temperaturas, grafico),
+                        2000
+                    );
+                });
+            })
+            .catch(error => {
+                console.error("Erro ao atualizar gráfico: " + error.message);
+                proximaAtualizacaoTemperatura = setTimeout(
+                    () => atualizarGraficoTemperatura(labels, temperaturas, grafico),
+                    2000
+                );
+            });
     }
 
     function carregarGraficoAlertas() {
@@ -176,14 +290,32 @@
             }
         });
     }
+    function atualizarKPIs(dados) {
 
-    carregarGrafico();
-    carregarGraficoAlertas();
+        if (!dados || dados.length === 0) return;
 
-    setInterval(() => {
-        carregarGrafico();
-        carregarGraficoAlertas();
-    }, 10000);
+        const ultimo = dados[dados.length - 1];
+
+        tempAtual.innerHTML = `${ultimo.tempAtual} ºC`;
+
+        let definicao = "Normal";
+
+        if (ultimo.tempAtual < 2) definicao = "Crítico";
+        if (ultimo.tempAtual > 6) definicao = "Crítico";
+
+        estado.innerHTML = definicao;
+
+        const alertas = dados.filter(reg =>
+            reg.tempAtual < reg.tempMin || reg.tempAtual > reg.tempMax
+        ).length;
+
+        totalAlertas.innerHTML = `${alertas} alertas`;
+
+        const media = (tempAtual * dados.length) / dados.length;
+        tempMedia.innerHTML = `${media.toFixed(1)} ºC`;
+    }
+
 </script>
+
 
 </html>

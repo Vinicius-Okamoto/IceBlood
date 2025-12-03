@@ -1,6 +1,5 @@
 
 function limparErros() {
-
     var erroNome = document.getElementById('erro_nome');
     var erroToken = document.getElementById('erro_token');
     var erroEmail = document.getElementById('erro_email');
@@ -29,51 +28,59 @@ function limparErros() {
     }
 }
 
-function cadastrar() {
-    limparErros();
+function validarCampos() {
+
+    let valido = true;
+
     var nomeVar = ipt_nome.value;
     var emailVar = ipt_email.value;
     var senhaVar = ipt_senha.value;
     var confirmacaoSenhaVar = ipt_confirmarSenha.value;
     var tokenVar = ipt_token.value;
 
-    if (
-        nomeVar == "" ||
-        emailVar == "" ||
-        senhaVar == "" ||
-        confirmacaoSenhaVar == "" ||
-        tokenVar == ""
-    ) {
-        mensagem_erro.innerHTML = "Preencha todos os campos.";
-        return false;
-    } else {
-        setInterval(5000);
+    if (nomeVar.length < 1) {
+        document.getElementById('erro_nome').innerHTML = "Nome menor que 1 caractere.";
+        document.getElementById('erro_nome').style.display = 'block';
+        valido = false;
     }
 
-    if (nomeVar.length < 1) {
-        erro_nome.innerHTML = "Nome menor que 1 caractere.";
-        erro_nome.style.display = 'block';
-        return false;
-    } if (!emailVar.includes('@')) {
-        erro_email.innerHTML = "Email deve conter @.";
-        erro_email.style.display = 'block';
-        return false;
-    } if (senhaVar.length < 6) {
-        erro_senha.innerHTML = "A senha deve conter no mínimo 6 caracteres."
-        erro_senha.style.display = 'block';
-        return false;
-    } if (senhaVar !== confirmacaoSenhaVar) {
-        erro_confirmarSenha.innerHTML = "As senhas não coincidem.";
-        erro_confirmarSenha.style.display = 'block';
-        return false;
-    } if (tokenVar.length < 3) {
-        erro_token.innerHTML = "Token inválido.";
-        erro_token.style.display = "block";
+    if (!emailVar.includes('@')) {
+        document.getElementById('erro_email').innerHTML = "Email deve conter @.";
+        document.getElementById('erro_email').style.display = 'block';
+        valido = false
+    }
+
+    if (senhaVar.length < 6) {
+        document.getElementById('erro_senha').innerHTML = "A senha deve conter no mínimo 6 caracteres.";
+        document.getElementById('erro_senha').style.display = 'block';
+        valido = false
+    }
+
+    if (senhaVar !== confirmacaoSenhaVar) {
+        document.getElementById('erro_confirmar_senha').innerHTML = "As senhas não coincidem.";
+        document.getElementById('erro_confirmar_senha').style.display = 'block';
+        valido = false
+    }
+
+    if (tokenVar.length < 3) {
+        document.getElementById('erro_token').innerHTML = "Token inválido.";
+        document.getElementById('erro_token').style.display = 'block';
+        valido = false;
+    }
+    return valido;
+}
+
+function cadastrar() {
+    limparErros();
+    
+    if (!validarCampos()) {
         return false;
     }
-    else {
-        setInterval(5000);
-    }
+
+    var nomeVar = ipt_nome.value;
+    var emailVar = ipt_email.value;
+    var senhaVar = ipt_senha.value;
+    var tokenVar = ipt_token.value;
 
     fetch("/usuarios/cadastrar", {
         method: "POST",
@@ -91,11 +98,10 @@ function cadastrar() {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-                mensagem_erro.innerHTML =
-                    "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+                console.log("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
 
                 setTimeout(() => {
-                    window.location = "login.html";
+                    window.location = "./login.html";
                 }, "2000");
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";
