@@ -1,5 +1,3 @@
-
-
 var VALOR_POR_BOLSA = 750;
 var PERDA_BASE_SEM_SISTEMA = 0.20;
 var REDUCAO_PERCENTUAL_NA_PERDA = 0.65;
@@ -15,20 +13,14 @@ function publico() {
     var qtdBolsa = Number(iptQuantidade.value);
     var selectPeriodo = tipoGasto.value;
 
-
-
     var perdaBolsasMensal_SemSistema = qtdBolsa * PERDA_BASE_SEM_SISTEMA;
     var custoMensal_SemSistema = perdaBolsasMensal_SemSistema * VALOR_POR_BOLSA;
-
 
     var economiaBolsasMensal = perdaBolsasMensal_SemSistema * REDUCAO_PERCENTUAL_NA_PERDA;
     var economiaFinanceiraMensal = economiaBolsasMensal * VALOR_POR_BOLSA;
 
-
     var perdaBolsasMensal_ComSistema = perdaBolsasMensal_SemSistema - economiaBolsasMensal;
     var custoMensal_ComSistema = custoMensal_SemSistema - economiaFinanceiraMensal;
-
-
 
     var perdaBolsasAnual_SemSistema = perdaBolsasMensal_SemSistema * 12;
     var custoAnual_SemSistema = custoMensal_SemSistema * 12;
@@ -38,11 +30,6 @@ function publico() {
 
     var perdaBolsasAnual_ComSistema = perdaBolsasMensal_ComSistema * 12;
     var custoAnual_ComSistema = custoMensal_ComSistema * 12;
-
-
-
-
-
 
     while (nome === '' || qtdBolsa <= 0 || selectPeriodo === '') {
         div_resultado.innerHTML = '<b>Por favor, preencha o nome, a quantidade e selecione o período!<b/>';
@@ -87,8 +74,8 @@ function publico() {
            <b>Situação Atual (Sem Monitoramento)</b> <br>
 
            <p>Perda Média: <i>20%</i><p/>
-           <p>Descarte Mensal: <i>${perdaBolsasAnual_SemSistema.toFixed(0)} bolsas</i><p/>
-            <p>Prejuízo: <i>R$${custoAnual_SemSistema.toFixed(2)}/mês</i><p/>
+           <p>Descarte Anual: <i>${perdaBolsasAnual_SemSistema.toFixed(0)} bolsas</i><p/>
+            <p>Prejuízo: <i>R$${custoAnual_SemSistema.toFixed(2)}/ano</i><p/>
             <p class="fonte">(Fonte: ANVISA)</p><br>
 
        <b>Com Monitoramento</b><br>
@@ -123,4 +110,30 @@ function publico() {
     
     Nova Perda Remanescente: 21 bolsas (Custo: R$15.750,00)*/
 
+}
+
+function enviar() {
+    var email = document.getElementById('inputEmail');
+    var mensagem = document.getElementById('inputMsg');
+
+    fetch("/enviar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            emailServer: email.value,
+            mensagemServer: mensagem.value,
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    email.value = '';
+    mensagem.value = '';
+    return false;
 }
