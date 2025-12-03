@@ -1,6 +1,4 @@
-
 function limparErros() {
-
     var erroNome = document.getElementById('erro_nome');
     var erroToken = document.getElementById('erro_token');
     var erroEmail = document.getElementById('erro_email');
@@ -36,6 +34,7 @@ function cadastrar() {
     var senhaVar = ipt_senha.value;
     var confirmacaoSenhaVar = ipt_confirmarSenha.value;
     var tokenVar = ipt_token.value;
+    var mensagem_erro = document.getElementById('mensagem_erro');
 
     if (
         nomeVar == "" ||
@@ -91,11 +90,10 @@ function cadastrar() {
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
-                mensagem_erro.innerHTML =
-                    "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+                console.log("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
 
                 setTimeout(() => {
-                    window.location = "login.html";
+                    window.location = "./login.html";
                 }, "2000");
             } else {
                 throw "Houve um erro ao tentar realizar o cadastro!";

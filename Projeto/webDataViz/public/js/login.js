@@ -15,11 +15,13 @@ function limparErros() {
 function entrar() {
     limparErros();
 
+    var erroSenha = document.getElementById('erro_senha_login');
+
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
 
         if (emailVar == "" || senhaVar == "") {
-            erro_senha_login.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            erroSenha.innerHTML = "Mensagem de erro para todos os campos em branco";
             return false;
         }
         else {
@@ -51,22 +53,17 @@ function entrar() {
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
 
-                    // if (emailVar == `suporte@gmail.com` || emailVar == `suporte2@gmail.com`) {
-                    //     setTimeout(function () {
-                    //     window.location = "./dashboard/macroDashSuporte.html";
-                    // }, 1000);
-                    // } else {
-                    //     setTimeout(function () {
+                     if (emailVar == `suporte@gmail.com` || emailVar == `suporte2@gmail.com`) {
+                         setTimeout(function () {
+                         window.location = "./dashboard/macroDashSuporte.html";
+                     }, 1000);
+                     } else {
+                         setTimeout(function () {
                         
-                    //     window.location = "./dashboard/macroDash.html";
-                    // }, 1000);
-
-                    }
-                    setTimeout(function () {
-                        
-                        window.location = "./dashboard/macroDash.html";
+                         window.location = "./dashboard/macroDash.html";
                     }, 1000);
 
+                    }
                 });
 
             } else {
