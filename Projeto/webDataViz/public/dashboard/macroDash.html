@@ -24,6 +24,7 @@
                 <ul>
                     <li><a href="../dashboard/macroDash.html" class="active">Visão Geral</a></li>
                     <li><a href=".././dashboard/historico.html">Histórico</a></li>
+                    <li><a href="https://lifesense.atlassian.net/servicedesk/customer/portal/1">Suporte</a></li>
                     <li><a href=".././index.html">Sair</a></li>
                 </ul>
             </nav>
@@ -64,7 +65,7 @@
         </section>
     </main>
     <script>
-        const TOKEN = "HT123A";
+        const TOKEN = sessionStorage.TOKEN_UNIDADE;
 
         function formatarHoraIsoToLabel(dtIso) {
             const d = new Date(dtIso);
