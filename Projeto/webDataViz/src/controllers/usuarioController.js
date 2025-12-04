@@ -22,7 +22,8 @@ function autenticar(req, res) {
                             nome: resultadoAutenticar[0].nome,
                             email: resultadoAutenticar[0].email,
                             senha: resultadoAutenticar[0].senha,
-                            fkUnidade: resultadoAutenticar[0].fkUnidade
+                            fkUnidade: resultadoAutenticar[0].fkUnidade,
+                            token: resultadoAutenticar[0].tokenUsuario
                         });
 
                     } else if (resultadoAutenticar.length == 0) {
@@ -46,7 +47,7 @@ function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var fkUnidade = req.body.fkUnidadeServer;
+    var token = req.body.tokenServer;
 
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");
@@ -54,25 +55,29 @@ function cadastrar(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    } else if (fkUnidade == undefined) {
-        res.status(400).send("Sua fkUnidade a vincular está undefined!");
+    } else if (token == undefined) {
+        res.status(400).send("Seu token a vincular está undefined!");
     } else {
+        usuarioModel.buscarPorToken(token)
+            .then(resultadoToken => {
+                if (resultadoToken.length == 0) {
+                    return console.log("Token inválido!")
+                }
 
-        usuarioModel.cadastrar(nome, email, senha, fkUnidade)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+                const idUnidade = resultadoToken[0].idUnidade;
+
+                return usuarioModel.cadastrar(nome, email, senha, idUnidade);
+            })
+            .then(resultadoCadastro => {
+                res.json({
+                    mensagem: "Usuário cadastrado com sucesso!",
+                    dados: resultadoCadastro
+                });
+            })
+            .catch(erro => {
+                console.log("Erro no cadastro:", erro.sqlMessage || erro);
+                res.status(500).json(erro.sqlMessage || erro);
+            });
     }
 }
 

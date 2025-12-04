@@ -72,7 +72,7 @@ function validarCampos() {
 
 function cadastrar() {
     limparErros();
-    
+
     if (!validarCampos()) {
         return false;
     }
@@ -91,7 +91,7 @@ function cadastrar() {
             nomeServer: nomeVar,
             emailServer: emailVar,
             senhaServer: senhaVar,
-            fkUnidadeServer: tokenVar
+            tokenServer: tokenVar
         }),
     })
         .then(function (resposta) {

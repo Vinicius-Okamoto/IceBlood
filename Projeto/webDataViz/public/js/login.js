@@ -21,11 +21,13 @@ function entrar() {
     if (emailVar == "") {
         document.getElementById('erro_email_login').innerHTML = "Preencha o campo email.";
         document.getElementById('erro_email_login').style.display = "block";
+        return false;
     }
 
     if (senhaVar == "") {
         document.getElementById('erro_senha_login').innerHTML = "Preencha o campo senha.";
         document.getElementById('erro_senha_login').style.display = "block";
+        return false;
     }
 
     console.log("FORM LOGIN: ", emailVar);
@@ -51,9 +53,9 @@ function entrar() {
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.NOME_USUARIO = json.nome;
                 sessionStorage.ID_USUARIO = json.id;
-                sessionStorage.TOKEN_UNIDADE = json.tokenUnidade;
+                sessionStorage.token = json.token;
 
-                if (emailVar == `suporte@gmail.com` || emailVar == `suporte2@gmail.com`) {
+                if (emailVar == `carlostevez@gmail.com` && senhaVar == `carlos123`) {
                     setTimeout(function () {
                         window.location = "./dashboard/macroDashSuporte.html";
                     }, 1000);
