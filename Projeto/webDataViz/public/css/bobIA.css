@@ -142,9 +142,27 @@ button:hover {
 #resposta {
     margin-top: 20px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #D0D3D4;
     border: 1px solid #63666A;
     text-align: left;
     display: none;
+}
+
+.links {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 40px;
+    color: #D0D3D4;
+    background-color: #B9030F;
+    border-radius: 10px;
+    border: 1px solid #70160E;
+    text-align: center;
+}
+
+.links a {
+    color: #D0D3D4;
 }
