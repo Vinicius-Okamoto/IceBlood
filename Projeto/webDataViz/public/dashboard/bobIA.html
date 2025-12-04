@@ -4,9 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BobIA</title>
-    <link rel="stylesheet" href="./css/bobIA.css">
+    <link rel="stylesheet" href=".././css/bobIA.css">
 </head>
 <body>
+     <header>
+        <div id="header-left">
+            <img src=".././assets/imgs/logo.png" alt="Logo do IceBlood">
+            <h1>IceBlood</h1>
+            <nav>
+                <ul>
+                    <!-- <li><a href="../dashboard/macroDashSuporte.html">Visão Geral</a></li>
+                    <li><a href=".././dashboard/historicoSuporte.html">Histórico</a></li> -->
+                    <li><a href=".././dashboard/bobIA.html" class="active">bobIA</a></li>
+                    <li><a href=".././indexSuporte.html">Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
     <div id="container">
         <h1>BobIA</h1>
@@ -15,6 +29,16 @@
         <button onclick="gerarResposta()">Gerar Resposta</button>
         <h3>Resposta da IA:</h3>
         <div id="resposta"></div>
+        <br><br>
+        <h1>Manual de instalação</h1>
+        <div class="links">
+            <a href=".././assets/doc/Manual IceBlood.pdf" target="_blank">Abrir PDF</a>
+        </div>
+        <br><br>
+        <h1>Jira</h1>
+        <div>
+            <a href="https://lifesense.atlassian.net/jira/servicedesk/projects/SUP/boards/2/list" class="links">Ir para o Jira-Servicedesk</a>
+        </div>
     </div>
 
     <script>

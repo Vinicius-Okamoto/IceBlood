@@ -10,7 +10,7 @@ function limparErros() {
         erroSenha.innerHTML = '';
         erroSenha.style.display = 'none';
     }
-}
+}   
 
 function entrar() {
     limparErros();
@@ -31,7 +31,7 @@ function entrar() {
     console.log("FORM LOGIN: ", emailVar);
     console.log("FORM SENHA: ", senhaVar);
 
-    fetch("/usuarios/autenticar", {
+     fetch("/usuarios/autenticar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -43,16 +43,15 @@ function entrar() {
     }).then(function (resposta) {
         console.log("ESTOU NO THEN DO entrar()!")
 
-        if (resposta.ok) {
-            console.log(resposta);
+        resposta.json().then(json => {
+            console.log(json);
+            console.log(JSON.stringify(json));
 
-            resposta.json().then(json => {
-                console.log(json);
-                console.log(JSON.stringify(json));
+            if (resposta.ok) {
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.NOME_USUARIO = json.nome;
                 sessionStorage.ID_USUARIO = json.id;
-                sessionStorage.TOKEN_UNIDADE = json.unidadeToken;
+                sessionStorage.TOKEN_UNIDADE = json.tokenUnidade;
 
                 if (emailVar == `suporte@gmail.com` || emailVar == `suporte2@gmail.com`) {
                     setTimeout(function () {
@@ -62,20 +61,17 @@ function entrar() {
                     setTimeout(function () {
                         window.location = "./dashboard/macroDash.html";
                     }, 1000);
-
                 }
-            });
 
-        } else {
-            console.log("Houve um erro ao tentar realizar o login!");
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
+            } else {
+                console.log("Houve um erro ao tentar realizar o login!");
+                console.error(json);
+            }
 
-    }).catch(function (erro) {
-        console.log(erro);
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
     })
-
-    return false;
 }
