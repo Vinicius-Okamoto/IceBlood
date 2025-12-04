@@ -39,26 +39,26 @@
 
                 <div class="card">
                     <h3>Temperatura Atual</h3>
-                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para baixo">
+                    <img src=".././assets/imgs/positivo.png"  id="iconTemp">
                     <p id="tempAtual">-- ºC</p>
                 </div>
 
                 <div class="card">
-                    <h3>Status</h3>
-                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
-                    <p id="estado">--</p>
-                </div>
-
-                <div class="card">
                     <h3>Total de alertas (Diário)</h3>
-                    <img src=".././assets/imgs/negativo.png" alt="Icone de flecha para baixo">
-                    <p id="totalAlertas">-- alertas</p>
+                    <img src=".././assets/imgs/positivo.png"  id="iconTotalAlertas">
+                    <p id="totalAlertas">--</p>
                 </div>
 
                 <div class="card">
-                    <h3>Temperatura Média (Diária)</h3>
-                    <img src=".././assets/imgs/positivo.png" alt="Icone de flecha para cima">
-                    <p id="tempMedia">-- ºC</p>
+                    <h3>Tempo fora do ideal(Diário)</h3>
+                    <img src=".././assets/imgs/negativo.png"  id="iconTempo">
+                    <p id="tempoFora">-- alertas</p>
+                </div>
+
+                <div class="card">
+                    <h3>Status</h3>
+                    <img src=".././assets/imgs/positivo.png"  id="iconEstado">
+                    <p id="estado">-- ºC</p>
                 </div>
 
             </div>
@@ -88,8 +88,8 @@
     let graficoTemperatura;
     let proximaAtualizacaoTemperatura;
 
-    token = 'HT123A';
-    idCamara = 1;
+    let token = sessionStorage.TOKEN_UNIDADE;
+    let idCamara = 1;
 
     window.onload = () => {
         obterDadosTemperatura();
@@ -166,8 +166,8 @@
                     backgroundColor: 'rgba(185, 3, 15, 0.1)',
                     fill: true,
                     tension: 0.4,
-                    pointRadius: 6,
-                    pointHoverRadius: 9,
+                    pointRadius: 1,
+                    pointHoverRadius: 0,
                     pointBackgroundColor: 'white',
                     pointBorderColor: '#B9030F',
                     pointBorderWidth: 2,
@@ -227,40 +227,33 @@
                 response.json().then(novosDados => {
                     atualizarKPIs(novosDados);
                     carregarGraficoAlertas(novosDados);
-                    console.log("Dado novo:");
-                    console.log(novosDados);
 
                     let ultimo = novosDados[novosDados.length - 1];
-
                     let novoHorario = formatarHorario(ultimo.dtHoraAtual);
                     let novaTemp = ultimo.tempAtual;
-
-                    if (novoHorario === labels[labels.length - 1]) {
-                        console.log("Mesmo horário do último ponto — sem atualização.");
-                    } else {
-                        labels.shift();
-                        labels.push(novoHorario);
-
-                        temperaturas.shift();
-                        temperaturas.push(novaTemp);
-
-                        grafico.update();
-                    }
+                    // sempre empurra o novo e descarta o primeiro
+                    labels.push(novoHorario);
+                    temperaturas.push(novaTemp);
+                    labels.shift();
+                    temperaturas.shift();
+                    grafico.update();
 
                     proximaAtualizacaoTemperatura = setTimeout(
                         () => atualizarGraficoTemperatura(labels, temperaturas, grafico),
-                        2000
+                        10000
                     );
                 });
             })
             .catch(error => {
-                console.error("Erro ao atualizar gráfico: " + error.message);
+                console.error("Erro ao atualizar gráfico:", error.message);
+
                 proximaAtualizacaoTemperatura = setTimeout(
                     () => atualizarGraficoTemperatura(labels, temperaturas, grafico),
-                    2000
+                    10000
                 );
             });
     }
+
     function calcularAlertasPorHorario(dados) {
         let manhã = 0;
         let tarde = 0;
@@ -337,14 +330,50 @@
         ).length;
         totalAlertas.innerHTML = `${alertas} alertas`;
         //KIP Média
-        let soma = 0;
+        let minutosFora = 0;
         for (let i = 0; i < dados.length; i++) {
-            soma += Number(dados[i].tempAtual);
-        }
-        let media = soma / dados.length;
-        tempMedia.innerHTML = `${media.toFixed(1)}ºC`;
+            const r = dados[i];
+            const fora = (r.tempAtual < r.tempMin || r.tempAtual > r.tempMax);
 
+            if (fora) {
+                minutosFora += 1;
+            }
+        }
+        tempoFora.innerHTML = `${minutosFora} min fora`;
+        atualizarIcones(ultimo, alertas, minutosFora);
     }
+    function atualizarIcones(ultimo, totalAlertasNum, minutosFora) {
+
+    const iconTemp = document.getElementById("iconTemp");
+    const iconTotalAlertas = document.getElementById("iconTotalAlertas");
+    const iconTempoFora = document.getElementById("iconTempo");
+    const iconEstado = document.getElementById("iconEstado");
+
+    // temperatura atual
+    if (ultimo.tempAtual >= 2 && ultimo.tempAtual <= 6) {
+        iconTemp.src = ".././assets/imgs/positivo.png";
+    } else {
+        iconTemp.src = ".././assets/imgs/negativo.png";
+    }
+    // total de alertas
+    if (totalAlertasNum > 2) {
+        iconTotalAlertas.src = ".././assets/imgs/negativo.png";
+    } else {
+        iconTotalAlertas.src = ".././assets/imgs/positivo.png";
+    }
+    // tempo fora ideal
+    if (minutosFora > 5) {
+        iconTempoFora.src = ".././assets/imgs/negativo.png";
+    } else {
+        iconTempoFora.src = ".././assets/imgs/positivo.png";
+    }
+    // estado
+    if (ultimo.tempAtual < 2 || ultimo.tempAtual > 6) {
+        iconEstado.src = ".././assets/imgs/negativo.png";
+    } else {
+        iconEstado.src = ".././assets/imgs/positivo.png";
+    }
+}
 
 </script>
 

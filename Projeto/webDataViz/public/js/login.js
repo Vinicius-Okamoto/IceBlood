@@ -50,10 +50,10 @@ function entrar() {
             console.log(JSON.stringify(json));
 
             if (resposta.ok) {
-                sessionStorage.EMAIL_USUARIO = json.email;
-                sessionStorage.NOME_USUARIO = json.nome;
+                sessionStorage.EMAIL_USUARIO = json.emailUsuario;
+                sessionStorage.NOME_USUARIO = json.nomeUsuario;
                 sessionStorage.ID_USUARIO = json.id;
-                sessionStorage.token = json.token;
+                sessionStorage.TOKEN_UNIDADE = json.fkUnidade;
 
                 if (emailVar == `carlostevez@gmail.com` && senhaVar == `carlos123`) {
                     setTimeout(function () {
