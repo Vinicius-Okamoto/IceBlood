@@ -43,19 +43,8 @@ function entrar() {
     }).then(function (resposta) {
         console.log("ESTOU NO THEN DO entrar()!")
 
-<<<<<<< HEAD
-                resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.TOKEN_UNIDADE = json.tokenUnidade;
-
-=======
         if (resposta.ok) {
             console.log(resposta);
->>>>>>> 62758df6c787f8c11f0230bcad2de2457c2c36df
 
             resposta.json().then(json => {
                 console.log(json);
@@ -63,6 +52,7 @@ function entrar() {
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.NOME_USUARIO = json.nome;
                 sessionStorage.ID_USUARIO = json.id;
+                sessionStorage.TOKEN_UNIDADE = json.unidadeToken;
 
                 if (emailVar == `suporte@gmail.com` || emailVar == `suporte2@gmail.com`) {
                     setTimeout(function () {

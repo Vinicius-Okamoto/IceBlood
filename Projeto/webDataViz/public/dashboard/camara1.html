@@ -126,6 +126,7 @@
                     resposta.reverse();
 
                     plotarGraficoTemperatura(resposta);
+                    carregarGraficoAlertas(resposta);
                 });
             })
             .catch(error => {
@@ -147,7 +148,7 @@
         atualizarKPIs(resposta);
         console.log("Labels:", labels);
         console.log("Temperaturas:", temperaturas);
-    let graficoTemperatura;
+        let graficoTemperatura;
 
         const ctx = document.getElementById('temperatureChart');
 
@@ -225,6 +226,7 @@
 
                 response.json().then(novosDados => {
                     atualizarKPIs(novosDados);
+                    carregarGraficoAlertas(novosDados);
                     console.log("Dado novo:");
                     console.log(novosDados);
 
@@ -259,17 +261,46 @@
                 );
             });
     }
+    function calcularAlertasPorHorario(dados) {
+        let manhã = 0;
+        let tarde = 0;
+        let noite = 0;
 
-    function carregarGraficoAlertas() {
-        const ctx2 = document.getElementById('horaryChart');
+        dados.forEach(reg => {
 
-        new Chart(ctx2, {
+            const hora = new Date(reg.dtHoraAtual).getHours();
+
+            const alerta = reg.tempAtual < reg.tempMin || reg.tempAtual > reg.tempMax;
+
+            if (!alerta) return;
+
+            if (hora >= 5 && hora < 12) {
+                manhã++;
+            } else if (hora >= 12 && hora < 18) {
+                tarde++;
+            } else {
+                noite++;
+            }
+        });
+
+        return [manhã, tarde, noite];
+    }
+
+    let graficoAlertas;
+    function carregarGraficoAlertas(dados = null) {
+        if (!dados) return;
+
+        const ctx = document.getElementById('horaryChart');
+        const contagem = calcularAlertasPorHorario(dados);
+
+        if (graficoAlertas) graficoAlertas.destroy();
+        graficoAlertas = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: ['Manhã', 'Tarde', 'Noite'],
                 datasets: [{
-                    label: 'Contagem de Alertas',
-                    data: [8, 10, 6],
+                    label: 'Alertas',
+                    data: contagem,
                     backgroundColor: [
                         'rgba(112, 22, 14, 0.5)',
                         'rgba(112, 22, 14, 0.7)',
@@ -291,29 +322,29 @@
         });
     }
     function atualizarKPIs(dados) {
+        //KPI Temperatura
+        if (!dados || dados.length === 0) return;
+        const ultimo = dados[dados.length - 1];
+        tempAtual.innerHTML = `${ultimo.tempAtual} ºC`;
+        //KPI Status
+        let definicao = "Normal";
+        if (ultimo.tempAtual < 2) definicao = "Crítico";
+        if (ultimo.tempAtual > 6) definicao = "Crítico";
+        estado.innerHTML = definicao;
+        //KPI Alertas
+        const alertas = dados.filter(reg =>
+            reg.tempAtual < reg.tempMin || reg.tempAtual > reg.tempMax
+        ).length;
+        totalAlertas.innerHTML = `${alertas} alertas`;
+        //KIP Média
+        let soma = 0;
+        for (let i = 0; i < dados.length; i++) {
+            soma += Number(dados[i].tempAtual);
+        }
+        let media = soma / dados.length;
+        tempMedia.innerHTML = `${media.toFixed(1)}ºC`;
 
-    if (!dados || dados.length === 0) return;
-
-    const ultimo = dados[dados.length - 1];
-
-    tempAtual.innerHTML = `${ultimo.tempAtual} ºC`;
-
-    let definicao = "Normal";
-
-    if (ultimo.tempAtual < 2) definicao = "Crítico";
-    if (ultimo.tempAtual > 6) definicao = "Crítico";
-
-    estado.innerHTML = definicao;
-
-    const alertas = dados.filter(reg =>
-        reg.tempAtual < reg.tempMin || reg.tempAtual > reg.tempMax
-    ).length;
-
-    totalAlertas.innerHTML = `${alertas} alertas`;
-
-    const media = (tempAtual * dados.length) / dados.length;
-    tempMedia.innerHTML = `${media.toFixed(1)} ºC`;
-}
+    }
 
 </script>
 
