@@ -10,7 +10,7 @@
     --cor-secundaria: #70160E; 
     --cor-acento: #FFC300;    
     --cor-fundo: #F8F9FA;   
-    --cor-superficie: #FFFFFF; 
+    --cor-superficie: #FFF; 
     --cor-texto-principal: #212529;
     --cor-texto-claro: #495057;
     --cor-sombra-suave: rgba(0, 0, 0, 0.08);
@@ -131,7 +131,7 @@ button {
 
 button {
     background-color: #B9030F;
-    color: #FFFFFF;
+    color: #FFF;
     border: none;
 }
 
@@ -140,11 +140,16 @@ button:hover {
 }
 
 #resposta {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
     padding: 10px;
     border-radius: 10px;
     width: 700px;
-    background-color: #D0D3D4;
+    color: #FFF;
+    background-color: #B9030F;
     border: 2px solid #70160E;
     text-align: left;
     display: none;
@@ -157,7 +162,7 @@ button:hover {
     align-items: center;
     width: 350px;
     height: 40px;
-    color: #fff;
+    color: #FFF;
     background-color: #B9030F;
     border-radius: 10px;
     border: 1px solid #70160E;
@@ -165,5 +170,5 @@ button:hover {
 }
 
 .links a {
-    color: #fff;
+    color: #FFF;
 }
