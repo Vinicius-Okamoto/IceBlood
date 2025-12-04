@@ -19,8 +19,8 @@ const serial = async (
     let poolBancoDados = mysql.createPool(
         {
             host: '127.0.0.1',
-            user: 'lifesense',
-            password: 'IceBlood@123',
+            user: 'voleinside',
+            password: 'Voleinside@123',
             database: 'iceblood',
             port: 3307 // Inserindo os dados no banco virtualizado
         } 
@@ -66,21 +66,11 @@ const serial = async (
             const dataHoraAtual = obterHoraBrasiliaFormatada();
 
             // este insert irá inserir os dados na tabela "medida"
-            await poolBancoDados.execute(
-                'INSERT INTO registro (temperatura, dtHora, fkSensor) VALUES (?, ?, 1)',
-                [sensorAnalogico + 3, dataHoraAtual]
-            );
-            console.log("valores inseridos no banco: ", sensorAnalogico + 3, dataHoraAtual);
+            console.log("valores inseridos no banco: ", sensorAnalogico, dataHoraAtual);
             await poolBancoDados.execute(
                 'INSERT INTO registro (temperatura, dtHora, fkSensor) VALUES (?, ?, 1)',
                 [sensorAnalogico, dataHoraAtual]
             );
-            console.log("valores inseridos no banco: ", sensorAnalogico, dataHoraAtual);
-            await poolBancoDados.execute(
-                'INSERT INTO registro (temperatura, dtHora, fkSensor) VALUES (?, ?, 1)',
-                [sensorAnalogico - 2, dataHoraAtual]
-            );
-            console.log("valores inseridos no banco: ", sensorAnalogico - 2, dataHoraAtual);
         }
 
     });
