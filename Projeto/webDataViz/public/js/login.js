@@ -57,7 +57,7 @@ function entrar() {
 
                 if (emailVar == `carlostevez@gmail.com` && senhaVar == `carlos123`) {
                     setTimeout(function () {
-                        window.location = "./dashboard/macroDashSuporte.html";
+                        window.location = "./dashboard/bobIA.html";
                     }, 1000);
                 } else {
                     setTimeout(function () {
