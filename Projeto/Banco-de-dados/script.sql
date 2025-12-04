@@ -72,7 +72,8 @@ INSERT INTO empresa (razaoSocial, nomeFantasia, cnpj) VALUES
 INSERT INTO unidade (token, nomeUnidade, cnpj, cep, numero, fkEmpresa) VALUES
 ('HT123A', 'Unidade 01', '27654321000111', '01310940', '101', 1),
 ('HT987B', 'Unidade 02', '27654321000112', '04547001', '55', 1),
-('BS654C', 'Unidade 03', '27654321000113', '02047000', '300', 1);
+('BS654C', 'Unidade 03', '27654321000113', '02047000', '300', 1),
+('SUP001', 'Suporte Central', '00000000', null, null, 1);
 
 -- Inserindo dados na tabela CAMARA
 INSERT INTO camara (fkUnidade, camaraSetor) VALUES
@@ -88,38 +89,39 @@ INSERT INTO sensor(fkCamara, tempMax, tempMin) VALUES
 
 -- Inserindo usuários de suporte
 INSERT INTO usuario(fkUnidade, nome, email, senha) VALUES
-(NULL, 'Matheus Queiroz', 'matheusqueiroz@gmail.com', 'matheus123'),
-(NULL, 'Vinicius Yudi', 'viniciusyudi@gmail.com', 'vinicius123'),
-(NULL, 'Carlos Tevez', 'carlostevez@gmail.com', 'carlos123');
+(4, 'Matheus Queiroz', 'matheusqueiroz@gmail.com', 'matheus123'),
+(4, 'Vinicius Yudi', 'viniciusyudi@gmail.com', 'vinicius123'),
+(4, 'Carlos Tevez', 'carlostevez@gmail.com', 'carlos123');
 
 -- VIEW USUARIO CORRIGIDA
 CREATE VIEW vwUsuario AS 
-	SELECT 
-        u.idUsuario AS id,
-        u.nome AS nomeUsuario,
-        u.email AS emailUsuario,
-        u.senha AS senhaUsuario,
-        u.fkUnidade,
-        un.token AS tokenUnidade,
-        un.fkEmpresa AS empresaId
-    FROM usuario u
-    JOIN unidade un ON u.fkUnidade = un.idUnidade
-    JOIN empresa e ON un.fkEmpresa = e.idEmpresa;
+SELECT 
+    u.idUsuario AS id,
+    u.nome AS nomeUsuario,
+    u.email AS emailUsuario,
+    u.senha AS senhaUsuario,
+    u.fkUnidade AS idUnidade,
+    un.token AS tokenUnidade,
+    un.nomeUnidade AS nomeUnidade,
+    un.fkEmpresa AS empresaId
+FROM usuario u
+JOIN unidade un ON u.fkUnidade = un.idUnidade
+JOIN empresa e ON un.fkEmpresa = e.idEmpresa;
 
 -- VIEW DASHBOARD CORRIGIDA
 CREATE VIEW vwDashboard AS
 SELECT
-    r.idRegistro,
-    r.temperatura AS tempAtual,
-    r.dtHora AS dtHoraAtual,
-    s.idSensor,
-    s.tempMin,
-    s.tempMax,
-    c.idCamara,
-    c.camaraSetor,
-    u.token AS unidadeToken,
-    u.nomeUnidade,
-    us.nome AS nomeUsuario
+    r.idRegistro as idRegistro,
+    r.temperatura as tempAtual,
+    r.dtHora as dtHoraAtual,
+    s.idSensor as idSensor,
+    s.tempMin as tempMin,
+    s.tempMax as tempMax,
+    c.idCamara as idCamara,
+    c.camaraSetor as camaraSetor,
+    u.token as unidadeToken,
+    u.nomeUnidade as nomeUnidade,
+    us.nome as nomeUsuario
 FROM registro r
 JOIN sensor s   ON r.fkSensor = s.idSensor
 JOIN camara c   ON s.fkCamara = c.idCamara
