@@ -143,8 +143,9 @@ button:hover {
     margin-top: 20px;
     padding: 10px;
     border-radius: 10px;
+    width: 700px;
     background-color: #D0D3D4;
-    border: 1px solid #63666A;
+    border: 2px solid #70160E;
     text-align: left;
     display: none;
 }
@@ -156,7 +157,7 @@ button:hover {
     align-items: center;
     width: 350px;
     height: 40px;
-    color: #D0D3D4;
+    color: #fff;
     background-color: #B9030F;
     border-radius: 10px;
     border: 1px solid #70160E;
@@ -164,5 +165,5 @@ button:hover {
 }
 
 .links a {
-    color: #D0D3D4;
+    color: #fff;
 }
