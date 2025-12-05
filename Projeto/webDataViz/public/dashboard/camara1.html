@@ -35,9 +35,9 @@
         <section>
             <h1>Olá, Empresa 👋</h1>
             <h2>Bem-vindo ao seu painel de controle</h2>
-
+            
             <div class="kpi-cards">
-
+                
                 <div class="card">
                     <h3>Temperatura Atual</h3>
                     <img src=".././assets/imgs/positivo.png"  id="iconTemp">
@@ -63,7 +63,7 @@
                 </div>
 
             </div>
-
+            
             <div id="dashboard">
                 <h1>Relatórios de Temperatura</h1>
 
@@ -81,11 +81,13 @@
 
                 </div>
             </div>
+            <div id="alerta"></div>
         </section>
     </main>
-
+<script src="./../js/alerta.js"></script>
 </body>
 <script>
+    
     let graficoTemperatura;
     let proximaAtualizacaoTemperatura;
 
@@ -228,10 +230,11 @@
                 response.json().then(novosDados => {
                     atualizarKPIs(novosDados);
                     carregarGraficoAlertas(novosDados);
-
+                    
                     let ultimo = novosDados[novosDados.length - 1];
                     let novoHorario = formatarHorario(ultimo.dtHoraAtual);
                     let novaTemp = ultimo.tempAtual;
+                    alertar(ultimo, idCamara)
                     // sempre empurra o novo e descarta o primeiro
                     labels.push(novoHorario);
                     temperaturas.push(novaTemp);
@@ -330,6 +333,7 @@
             reg.tempAtual < reg.tempMin || reg.tempAtual > reg.tempMax
         ).length;
         totalAlertas.innerHTML = `${alertas} alertas`;
+
         //KIP Média
         let minutosFora = 0;
         for (let i = 0; i < dados.length; i++) {
@@ -376,6 +380,5 @@
     }
 }
 </script>
-
 
 </html>
