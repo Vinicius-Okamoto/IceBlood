@@ -10,7 +10,7 @@ function limparErros() {
         erroSenha.innerHTML = '';
         erroSenha.style.display = 'none';
     }
-}   
+}
 
 function entrar() {
     limparErros();
@@ -33,7 +33,7 @@ function entrar() {
     console.log("FORM LOGIN: ", emailVar);
     console.log("FORM SENHA: ", senhaVar);
 
-     fetch("/usuarios/autenticar", {
+    fetch("/usuarios/autenticar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -59,7 +59,17 @@ function entrar() {
                     setTimeout(function () {
                         window.location = "./dashboard/bobIA.html";
                     }, 1000);
-                } else {
+                } else if (emailVar == 'matheusqueiroz@gmail.com' && senhaVar == 'matheus123') {
+                    setTimeout(function () {
+                        window.location = "./dashboard/suporteN1.html";
+                    }, 1000);
+                }
+                else if (emailVar == 'viniciusyudi@gmail.com' && senhaVar == 'vinicius123') {
+                    setTimeout(function () {
+                        window.location = "./dashboard/suporteN2.html";
+                    }, 1000);
+                }
+                else {
                     setTimeout(function () {
                         window.location = "./dashboard/macroDash.html";
                     }, 1000);
