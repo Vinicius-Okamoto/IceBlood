@@ -33,6 +33,7 @@
 
     <main>
         <section>
+            <h1>Olá, <span id="msgNome"></span> 👋</h1>
             <h1>Câmaras Frias</h1>
             <p>Selecione uma câmara para ver o dashboard detalhado ou veja o comparativo abaixo.</p>
 
@@ -66,6 +67,8 @@
     </main>
     <script>
         const TOKEN = sessionStorage.TOKEN_UNIDADE;
+        const NOME = sessionStorage.NOME_USUARIO;
+        msgNome.innerHTML = NOME
 
         function formatarHoraIsoToLabel(dtIso) {
             const d = new Date(dtIso);

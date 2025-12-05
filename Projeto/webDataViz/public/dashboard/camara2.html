@@ -33,7 +33,7 @@
     </header>
     <main>
         <section>
-            <h1>Olá, Empresa 👋</h1>
+            <h1>Olá, <span id="msgNome"></span> 👋</h1>
             <h2>Bem-vindo ao seu painel de controle</h2>
             
             <div class="kpi-cards">
@@ -92,6 +92,8 @@
     let proximaAtualizacaoTemperatura;
 
     let token = sessionStorage.TOKEN_UNIDADE;
+    const NOME = sessionStorage.NOME_USUARIO;
+    msgNome.innerHTML = NOME
     let idCamara = 2;
 
     window.onload = () => {
