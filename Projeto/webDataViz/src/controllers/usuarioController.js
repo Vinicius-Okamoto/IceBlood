@@ -19,11 +19,12 @@ function autenticar(req, res) {
 
                         return res.json({
                             id: resultadoAutenticar[0].id,
-                            nome: resultadoAutenticar[0].nome,
-                            email: resultadoAutenticar[0].email,
-                            senha: resultadoAutenticar[0].senha,
-                            fkUnidade: resultadoAutenticar[0].fkUnidade,
-                            token: resultadoAutenticar[0].tokenUsuario
+                            nomeUsuario: resultadoAutenticar[0].nomeUsuario,
+                            emailUsuario: resultadoAutenticar[0].emailUsuario,
+                            senhaUsuario: resultadoAutenticar[0].senhaUsuario,
+                            idUnidade: resultadoAutenticar[0].idUnidade,
+                            tokenUnidade: resultadoAutenticar[0].tokenUnidade,
+                            nomeUnidade: resultadoAutenticar[0].nomeUnidade
                         });
 
                     } else if (resultadoAutenticar.length == 0) {
