@@ -19,8 +19,8 @@ const serial = async (
     let poolBancoDados = mysql.createPool(
         {
             host: '127.0.0.1',
-            user: 'voleinside',
-            password: 'Voleinside@123',
+            user: 'lifesense',
+            password: 'IceBlood@123',
             database: 'iceblood',
             port: 3307 // Inserindo os dados no banco virtualizado
         } 
