@@ -26,6 +26,15 @@
 
     <section class="historico-container-tabela">
     <h2 class="titulo-historico">Histórico</h2>
+
+    <div class="filtro-container">
+        <label for="filtro-camara">Filtrar por: </label>
+        <select id="filtro-camara" onchange="filtrarHistorico()">
+            <option value="0">Todas as Câmaras</option>
+            <option value="1">Câmara 1</option>
+            <option value="2">Câmara 2</option>
+        </select>
+    </div>
     
     <div class="historico_card_tabela" id="historico_tabela">
         
@@ -44,15 +53,15 @@
 </body>
 
 <script>
-    let historico = []; 
-    let graficoTemperatura;
+ 
+    let historicoCompleto = []; 
     let proximaAtualizacaoTemperatura;
+    
+    let idCamaraReal = 1; 
+    let token = sessionStorage.TOKEN_UNIDADE || "TOKEN_TESTE";
 
     const containerLinhas = document.getElementById('container-linhas');
-
-    let token = sessionStorage.TOKEN_UNIDADE;
-    const NOME = sessionStorage.NOME_USUARIO;
-    let idCamara = 1; 
+    const selectFiltro = document.getElementById('filtro-camara');
 
     window.onload = () => {
         obterDadosTemperatura();
@@ -63,91 +72,106 @@
             clearTimeout(proximaAtualizacaoTemperatura);
         }
 
-        console.log(`Tentando buscar em: /dashboard/temperaturas/${token}/${idCamara}`);
-
-        fetch(`/dashboard/temperaturas/${token}/${idCamara}`, { cache: 'no-store' })
+        fetch(`/dashboard/temperaturas/${token}/${idCamaraReal}`, { cache: 'no-store' })
             .then(response => {
-                if (!response.ok) {
-                    console.error("Erro na API.");
-                    return;
-                }
+                if (!response.ok) { return []; }
                 return response.json();
             })
-            .then(resposta => {
-                console.log("Dados da API:", resposta);
-
-                if (resposta.length === 0) {
-                    console.warn("A API retornou um array vazio!");
+            .then(respostaReal => {
+                if (respostaReal.length === 0) {
+                    exibirHistorico([]);
                     return;
                 }
 
-                plotarHistorico(resposta);
-                
-                console.log("Array histórico pronto:", historico); // Verifique se aqui tem dados
-                
-                exibirHistorico(historico);
+                let dadosCamara1 = respostaReal.slice(-5);
+
+                // 2. CRIAR 5 REGISTROS SIMULADOS (MOCK)
+                let dadosCamara2 = dadosCamara1.map(item => {
+                    let tempOriginal = parseFloat(item.tempAtual);
+                    let novaTemp = tempOriginal + 1.5; 
+
+                    return {
+                        ...item,            
+                        idCamara: 2,        
+                        tempAtual: novaTemp.toFixed(2)
+                    };
+                });
+
+                let dadosCombinados = [...dadosCamara1, ...dadosCamara2];
+
+                dadosCombinados.sort((a, b) => new Date(a.dtHoraAtual) - new Date(b.dtHoraAtual));
+
+                processarDadosParaVariavelGlobal(dadosCombinados);
+
+                filtrarHistorico();
             })
             .catch(error => {
-                console.error("Erro geral: " + error.message);
+                console.error("Erro: " + error.message);
             });
     }
 
-    function plotarHistorico(resposta) {
-        // Pega os últimos 10 (ou menos se tiver pouco dado)
-        let ultimosDados = resposta.slice(-10);
-
-        // Preenche o array global 'historico'
-        historico = ultimosDados.map(item => {
+    function processarDadosParaVariavelGlobal(dadosBrutos) {
+        historicoCompleto = dadosBrutos.map(item => {
             return {
-                camara: item.idCamara,
+                camara: item.idCamara, 
                 horario: item.dtHoraAtual,
-                temperatura: item.tempAtual
+                temperatura: item.tempAtual 
             };
         });
     }
 
-    function exibirHistorico(listaParaExibir) {
-    const MIN_IDEAL = 2.0;
-    const MAX_IDEAL = 6.0;
+    // --- NOVA FUNÇÃO DE FILTRO ---
+    function filtrarHistorico() {
+    
+        const opcaoSelecionada = selectFiltro.value;
 
-    containerLinhas.innerHTML = ""; 
+        let listaFiltrada;
 
-    if(listaParaExibir.length === 0) {
-        containerLinhas.innerHTML = "<div class='item-tabela'>Sem dados para exibir</div>";
-        return;
-    }
+        if (opcaoSelecionada == "0") {
 
-    for (let i = 0; i < listaParaExibir.length; i++) {
-        
-        let dataFormatada = new Date(listaParaExibir[i].horario).toLocaleString("pt-BR");
-
-        // Convertendo a temperatura para número
-        let temp = Number(listaParaExibir[i].temperatura);
-
-        let textoStatus = "";
-        let classeStatus = "";
-
-       
-        if (temp < MIN_IDEAL || temp > MAX_IDEAL) {
-            textoStatus = "Crítico";
-            classeStatus = "status-critico-tabela"; 
+            listaFiltrada = historicoCompleto;
         } else {
-            textoStatus = "Ideal";
-            classeStatus = "status-ideal-tabela";   
+  
+            listaFiltrada = historicoCompleto.filter(item => item.camara == opcaoSelecionada);
         }
-        
 
-        containerLinhas.innerHTML += `
-            <div class="item-tabela">
-                <span class="coluna-dado">Câmara ${listaParaExibir[i].camara}</span>
-                
-                <span class="coluna-dado">${temp}°C</span> 
-                
-                <span class="coluna-dado">${dataFormatada}</span> 
-                <span class="status-faixa ${classeStatus}">${textoStatus}</span>
-            </div>
-        `;
+        exibirHistorico(listaFiltrada);
     }
-}
+
+    function exibirHistorico(listaParaExibir) {
+        containerLinhas.innerHTML = ""; 
+
+        const MIN_IDEAL = 2.0;
+        const MAX_IDEAL = 6.0;
+
+        if(listaParaExibir.length === 0) {
+            containerLinhas.innerHTML = "<div class='item-tabela'>Sem dados para exibir</div>";
+            return;
+        }
+
+        // Loop invertido para os mais recentes ficarem no topo
+        for (let i = listaParaExibir.length - 1; i >= 0; i--) {
+            
+            let dataFormatada = new Date(listaParaExibir[i].horario).toLocaleString("pt-BR");
+            let temp = Number(listaParaExibir[i].temperatura);
+            
+            let textoStatus = "Ideal";
+            let classeStatus = "status-ideal-tabela";
+
+            if (temp < MIN_IDEAL || temp > MAX_IDEAL) {
+                textoStatus = "Crítico";
+                classeStatus = "status-critico-tabela"; 
+            }
+
+            containerLinhas.innerHTML += `
+                <div class="item-tabela">
+                    <span class="coluna-dado">Câmara ${listaParaExibir[i].camara}</span>
+                    <span class="coluna-dado">${temp.toFixed(1)}°C</span> 
+                    <span class="coluna-dado">${dataFormatada}</span> 
+                    <span class="status-faixa ${classeStatus}">${textoStatus}</span>
+                </div>
+            `;
+        }
+    }
 </script>
 </html>

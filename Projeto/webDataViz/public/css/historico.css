@@ -126,7 +126,7 @@ header #header-left nav ul li a.active{
     margin-bottom: var(--espacamento-lg);
 }
 
-.historico-card-tabela {
+.historico_card_tabela {
     background-color: var(--cor-superficie);
     border-radius: var(--raio-borda-md);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -190,4 +190,23 @@ header #header-left nav ul li a.active{
     width: fit-content;
     min-width: 90px;
     margin: 0; 
+}
+
+.status-critico-tabela{
+    color: red;
+}
+
+.status-ideal-tabela{
+    color: green;
+}
+
+.filtro-container {
+            margin-bottom: 15px;
+            text-align: right; /* Alinha o filtro à direita */
+        }
+#filtro-camara {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: 'Poppins', sans-serif;
 }
