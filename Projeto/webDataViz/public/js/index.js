@@ -16,16 +16,17 @@ function publico() {
     var perdaBolsasMensal_SemSistema = qtdBolsa * PERDA_BASE_SEM_SISTEMA;
     var custoMensal_SemSistema = perdaBolsasMensal_SemSistema * VALOR_POR_BOLSA;
 
-    var economiaBolsasMensal = perdaBolsasMensal_SemSistema * REDUCAO_PERCENTUAL_NA_PERDA;
+    var economiaBolsasMensal = (perdaBolsasMensal_SemSistema * REDUCAO_PERCENTUAL_NA_PERDA).toFixed(0);
     var economiaFinanceiraMensal = economiaBolsasMensal * VALOR_POR_BOLSA;
 
     var perdaBolsasMensal_ComSistema = perdaBolsasMensal_SemSistema - economiaBolsasMensal;
-    var custoMensal_ComSistema = custoMensal_SemSistema - economiaFinanceiraMensal;
+    var custoMensal_ComSistema = perdaBolsasMensal_ComSistema * VALOR_POR_BOLSA;
 
-    var perdaBolsasAnual_SemSistema = perdaBolsasMensal_SemSistema * 12;
+
+    var perdaBolsasAnual_SemSistema = (perdaBolsasMensal_SemSistema * 12);
     var custoAnual_SemSistema = custoMensal_SemSistema * 12;
 
-    var economiaBolsasAnual = economiaBolsasMensal * 12;
+    var economiaBolsasAnual = (economiaBolsasMensal * 12);
     var economiaFinanceiraAnual = economiaFinanceiraMensal * 12;
 
     var perdaBolsasAnual_ComSistema = perdaBolsasMensal_ComSistema * 12;
@@ -52,10 +53,10 @@ function publico() {
        <b>Com Monitoramento</b><br>
 
        <p>Redução de Perdas: <i>65% </i><p/>
-       <p>Bolsas Economizadas: <i>${economiaBolsasMensal.toFixed(0)} bolsas/mês</i><p/>
+       <p>Bolsas Economizadas: <i>${economiaBolsasMensal} bolsas/mês</i><p/>
        <p>Economia Financeira Direta: <i>R$${economiaFinanceiraMensal.toFixed(2)}/mês</i><p/>
        <p class="fonte">(Fonte: CURIOUS)</p><br>
-       <b class="final">A Nova Perda Remanescente seria de <i>${perdaBolsasMensal_ComSistema.toFixed(0)} bolsas</i>, com custo de  <i>R$${economiaBolsasMensal.toFixed(2)}</i>.<b/><br><br>
+       <b class="final">A Nova Perda Remanescente seria de <i>${perdaBolsasMensal_ComSistema.toFixed(0)} bolsas</i>, com custo de  <i>R$${custoMensal_ComSistema.toFixed(2)}</i>.<b/><br><br>
 
         <a href="#contatos">
             <button class id="btnContato">
@@ -81,10 +82,10 @@ function publico() {
        <b>Com Monitoramento</b><br>
 
        <p>Redução de Perdas: <i>65% </i><p/>
-       <p>Bolsas Economizadas: <i>${economiaBolsasAnual.toFixed(0)} bolsas/mês</i><p/>
+       <p>Bolsas Economizadas: <i>${economiaBolsasAnual} bolsas/mês</i><p/>
        <p>Economia Financeira Direta: <i>R$${economiaFinanceiraAnual.toFixed(2)}/mês</i><p/>
        <p class="fonte">(Fonte: CURIOUS)</p><br>
-       <b class="final">A Nova Perda Remanescente seria de <i>${perdaBolsasAnual_ComSistema.toFixed(0)} bolsas</i>, com custo de  <i>R$${economiaBolsasAnual.toFixed(2)}</i>.<b/><br><br><br>
+       <b class="final">A Nova Perda Remanescente seria de <i>${perdaBolsasAnual_ComSistema.toFixed(0)} bolsas</i>, com custo de  <i>R$${custoAnual_ComSistema.toFixed(2)}</i>.<b/><br><br><br>
        <a href="#contatos">
             <button class id="btnContato">
                 Contrate nossos serviços...

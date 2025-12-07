@@ -23,34 +23,131 @@
             </nav>
         </div>
     </header>
+
     <section class="historico-container-tabela">
     <h2 class="titulo-historico">Histórico</h2>
-    <div class="historico-card-tabela">
+    
+    <div class="historico_card_tabela" id="historico_tabela">
+        
         <div class="header-tabela">
             <span class="coluna-titulo">Câmara</span>
             <span class="coluna-titulo">Evento</span>
             <span class="coluna-titulo">Data</span>
             <span class="coluna-titulo">Status</span>
         </div>
-        <div class="item-tabela">
-            <span class="coluna-dado">Câmara 1</span>
-            <span class="coluna-dado">Temperatura dentro da faixa ideal</span>
-            <span class="coluna-dado">25/07/2025 09:00</span> 
-            <span class="status-faixa status-critico-tabela">Ideal</span>
-        </div>
-        <div class="item-tabela item-even">
-            <span class="coluna-dado">Câmara 1</span>
-            <span class="coluna-dado">Temperatura dentro da faixa ideal</span>
-            <span class="coluna-dado">25/07/2025 09:00</span> 
-            <span class="status-faixa status-critico-tabela">Ideal</span>
-        </div>
-        <div class="item-tabela">
-            <span class="coluna-dado">Câmara 1</span>
-            <span class="coluna-dado">Temperatura dentro da faixa ideal</span>
-            <span class="coluna-dado">25/07/2025 09:00</span> 
-            <span class="status-faixa status-critico-tabela">Ideal</span>
-        </div>
+
+        <div id="container-linhas">
+            </div>
+
     </div>
 </section>
 </body>
+
+<script>
+    let historico = []; 
+    let graficoTemperatura;
+    let proximaAtualizacaoTemperatura;
+
+    const containerLinhas = document.getElementById('container-linhas');
+
+    let token = sessionStorage.TOKEN_UNIDADE;
+    const NOME = sessionStorage.NOME_USUARIO;
+    let idCamara = 1; 
+
+    window.onload = () => {
+        obterDadosTemperatura();
+    };
+
+    function obterDadosTemperatura() {
+        if (proximaAtualizacaoTemperatura != undefined) {
+            clearTimeout(proximaAtualizacaoTemperatura);
+        }
+
+        console.log(`Tentando buscar em: /dashboard/temperaturas/${token}/${idCamara}`);
+
+        fetch(`/dashboard/temperaturas/${token}/${idCamara}`, { cache: 'no-store' })
+            .then(response => {
+                if (!response.ok) {
+                    console.error("Erro na API.");
+                    return;
+                }
+                return response.json();
+            })
+            .then(resposta => {
+                console.log("Dados da API:", resposta);
+
+                if (resposta.length === 0) {
+                    console.warn("A API retornou um array vazio!");
+                    return;
+                }
+
+                plotarHistorico(resposta);
+                
+                console.log("Array histórico pronto:", historico); // Verifique se aqui tem dados
+                
+                exibirHistorico(historico);
+            })
+            .catch(error => {
+                console.error("Erro geral: " + error.message);
+            });
+    }
+
+    function plotarHistorico(resposta) {
+        // Pega os últimos 10 (ou menos se tiver pouco dado)
+        let ultimosDados = resposta.slice(-10);
+
+        // Preenche o array global 'historico'
+        historico = ultimosDados.map(item => {
+            return {
+                camara: item.idCamara,
+                horario: item.dtHoraAtual,
+                temperatura: item.tempAtual
+            };
+        });
+    }
+
+    function exibirHistorico(listaParaExibir) {
+    const MIN_IDEAL = 2.0;
+    const MAX_IDEAL = 6.0;
+
+    containerLinhas.innerHTML = ""; 
+
+    if(listaParaExibir.length === 0) {
+        containerLinhas.innerHTML = "<div class='item-tabela'>Sem dados para exibir</div>";
+        return;
+    }
+
+    for (let i = 0; i < listaParaExibir.length; i++) {
+        
+        let dataFormatada = new Date(listaParaExibir[i].horario).toLocaleString("pt-BR");
+
+        // Convertendo a temperatura para número
+        let temp = Number(listaParaExibir[i].temperatura);
+
+        let textoStatus = "";
+        let classeStatus = "";
+
+       
+        if (temp < MIN_IDEAL || temp > MAX_IDEAL) {
+            textoStatus = "Crítico";
+            classeStatus = "status-critico-tabela"; 
+        } else {
+            textoStatus = "Ideal";
+            classeStatus = "status-ideal-tabela";   
+        }
+        
+
+        containerLinhas.innerHTML += `
+            <div class="item-tabela">
+                <span class="coluna-dado">Câmara ${listaParaExibir[i].camara}</span>
+                
+                <span class="coluna-dado">${temp}°C</span> 
+                
+                <span class="coluna-dado">${dataFormatada}</span> 
+                <span class="status-faixa ${classeStatus}">${textoStatus}</span>
+            </div>
+        `;
+    }
+}
+</script>
 </html>
