@@ -32,7 +32,6 @@
         <select id="filtro-camara" onchange="filtrarHistorico()">
             <option value="0">Todas as Câmaras</option>
             <option value="1">Câmara 1</option>
-            <option value="2">Câmara 2</option>
         </select>
     </div>
 
@@ -91,29 +90,11 @@
                     dadosCamara1.push(respostaReal[i]);
                 }
 
-                let dadosCamara2 = [];
-                for (let i = 0; i < dadosCamara1.length; i++) {
-                    let item = dadosCamara1[i];
-
-                    let tempOriginal = parseFloat(item.tempAtual);
-                    let novaTemp = tempOriginal;
-
-                    let novoObjeto = {
-                        idCamara: 2,
-                        dtHoraAtual: item.dtHoraAtual,
-                        tempAtual: novaTemp.toFixed(2)
-                    };
-
-                    dadosCamara2.push(novoObjeto);
-                }
 
                 let dadosCombinados = [];
 
                 for (let i = 0; i < dadosCamara1.length; i++) {
                     dadosCombinados.push(dadosCamara1[i]);
-                }
-                for (let i = 0; i < dadosCamara2.length; i++) {
-                    dadosCombinados.push(dadosCamara2[i]);
                 }
 
                 let tamanho = dadosCombinados.length;
@@ -121,15 +102,8 @@
                     for (let j = 0; j < tamanho - 1; j++) {
 
                         let dataA = new Date(dadosCombinados[j].dtHoraAtual);
-                        let dataB = new Date(dadosCombinados[j + 1].dtHoraAtual);
-
-                        if (dataA > dataB) {
-                            let temp = dadosCombinados[j];
-                            dadosCombinados[j] = dadosCombinados[j + 1];
-                            dadosCombinados[j + 1] = temp;
-                        }
-                    }
                 }
+            }
 
                 processarDadosParaVariavelGlobal(dadosCombinados);
                 filtrarHistorico();
