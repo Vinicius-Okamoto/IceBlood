@@ -55,7 +55,7 @@
             const data = await response.json();
 
             resposta.style.display = 'block';
-            document.getElementById('resposta').innerText = data.resultado;
+            document.getElementById('resposta').innerHTML = data.resultado;
         }
 
     </script>
