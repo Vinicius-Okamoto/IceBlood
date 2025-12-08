@@ -167,8 +167,15 @@ button:hover {
     border-radius: 10px;
     border: 1px solid #70160E;
     text-align: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .links a {
     color: #FFF;
+    text-decoration: none;
+}
+
+.links:hover{
+    background-color: #70160E;
 }
