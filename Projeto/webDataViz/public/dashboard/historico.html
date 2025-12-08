@@ -35,35 +35,32 @@
             <option value="2">Câmara 2</option>
         </select>
     </div>
-    
+
     <div class="historico_card_tabela" id="historico_tabela">
-        
         <div class="header-tabela">
             <span class="coluna-titulo">Câmara</span>
-            <span class="coluna-titulo">Evento</span>
+            <span class="coluna-titulo">Temperatura</span>
             <span class="coluna-titulo">Data</span>
             <span class="coluna-titulo">Status</span>
         </div>
 
         <div id="container-linhas">
-            </div>
-
+        </div>
     </div>
 </section>
 </body>
 
 <script>
- 
-    let historicoCompleto = []; 
+    let historicoCompleto = [];
     let proximaAtualizacaoTemperatura;
-    
-    let idCamaraReal = 1; 
-    let token = sessionStorage.TOKEN_UNIDADE || "TOKEN_TESTE";
+
+    let idCamaraReal = 1;
+    let token = sessionStorage.TOKEN_UNIDADE;
 
     const containerLinhas = document.getElementById('container-linhas');
     const selectFiltro = document.getElementById('filtro-camara');
 
-    window.onload = () => {
+    window.onload = function() {
         obterDadosTemperatura();
     };
 
@@ -73,73 +70,112 @@
         }
 
         fetch(`/dashboard/temperaturas/${token}/${idCamaraReal}`, { cache: 'no-store' })
-            .then(response => {
+            .then(function(response) {
                 if (!response.ok) { return []; }
                 return response.json();
             })
-            .then(respostaReal => {
+            .then(function(respostaReal) {
+
                 if (respostaReal.length === 0) {
                     exibirHistorico([]);
                     return;
                 }
 
-                let dadosCamara1 = respostaReal.slice(-5);
+                let dadosCamara1 = [];
+                let inicio = respostaReal.length - 5;
+                if (inicio < 0) {
+                    inicio = 0;
+                }
 
-                // 2. CRIAR 5 REGISTROS SIMULADOS (MOCK)
-                let dadosCamara2 = dadosCamara1.map(item => {
+                for (let i = inicio; i < respostaReal.length; i++) {
+                    dadosCamara1.push(respostaReal[i]);
+                }
+
+                let dadosCamara2 = [];
+                for (let i = 0; i < dadosCamara1.length; i++) {
+                    let item = dadosCamara1[i];
+
                     let tempOriginal = parseFloat(item.tempAtual);
-                    let novaTemp = tempOriginal + 1.5; 
+                    let novaTemp = tempOriginal;
 
-                    return {
-                        ...item,            
-                        idCamara: 2,        
+                    let novoObjeto = {
+                        idCamara: 2,
+                        dtHoraAtual: item.dtHoraAtual,
                         tempAtual: novaTemp.toFixed(2)
                     };
-                });
 
-                let dadosCombinados = [...dadosCamara1, ...dadosCamara2];
+                    dadosCamara2.push(novoObjeto);
+                }
 
-                dadosCombinados.sort((a, b) => new Date(a.dtHoraAtual) - new Date(b.dtHoraAtual));
+                let dadosCombinados = [];
+
+                for (let i = 0; i < dadosCamara1.length; i++) {
+                    dadosCombinados.push(dadosCamara1[i]);
+                }
+                for (let i = 0; i < dadosCamara2.length; i++) {
+                    dadosCombinados.push(dadosCamara2[i]);
+                }
+
+                let tamanho = dadosCombinados.length;
+                for (let i = 0; i < tamanho; i++) {
+                    for (let j = 0; j < tamanho - 1; j++) {
+
+                        let dataA = new Date(dadosCombinados[j].dtHoraAtual);
+                        let dataB = new Date(dadosCombinados[j + 1].dtHoraAtual);
+
+                        if (dataA > dataB) {
+                            let temp = dadosCombinados[j];
+                            dadosCombinados[j] = dadosCombinados[j + 1];
+                            dadosCombinados[j + 1] = temp;
+                        }
+                    }
+                }
 
                 processarDadosParaVariavelGlobal(dadosCombinados);
-
                 filtrarHistorico();
             })
-            .catch(error => {
+            .catch(function(error) {
                 console.error("Erro: " + error.message);
             });
     }
 
     function processarDadosParaVariavelGlobal(dadosBrutos) {
-        historicoCompleto = dadosBrutos.map(item => {
-            return {
-                camara: item.idCamara, 
+        historicoCompleto = [];
+
+        for (let i = 0; i < dadosBrutos.length; i++) {
+            let item = dadosBrutos[i];
+
+            let objetoFormatado = {
+                camara: item.idCamara,
                 horario: item.dtHoraAtual,
-                temperatura: item.tempAtual 
+                temperatura: item.tempAtual
             };
-        });
+
+            historicoCompleto.push(objetoFormatado);
+        }
     }
 
-    // --- NOVA FUNÇÃO DE FILTRO ---
     function filtrarHistorico() {
-    
         const opcaoSelecionada = selectFiltro.value;
-
-        let listaFiltrada;
+        let listaFiltrada = [];
 
         if (opcaoSelecionada == "0") {
-
-            listaFiltrada = historicoCompleto;
+            for (let i = 0; i < historicoCompleto.length; i++) {
+                listaFiltrada.push(historicoCompleto[i]);
+            }
         } else {
-  
-            listaFiltrada = historicoCompleto.filter(item => item.camara == opcaoSelecionada);
+            for (let i = 0; i < historicoCompleto.length; i++) {
+                if (historicoCompleto[i].camara == opcaoSelecionada) {
+                    listaFiltrada.push(historicoCompleto[i]);
+                }
+            }
         }
 
         exibirHistorico(listaFiltrada);
     }
 
     function exibirHistorico(listaParaExibir) {
-        containerLinhas.innerHTML = ""; 
+        containerLinhas.innerHTML = "";
 
         const MIN_IDEAL = 2.0;
         const MAX_IDEAL = 6.0;
@@ -149,25 +185,24 @@
             return;
         }
 
-        // Loop invertido para os mais recentes ficarem no topo
         for (let i = listaParaExibir.length - 1; i >= 0; i--) {
-            
+
             let dataFormatada = new Date(listaParaExibir[i].horario).toLocaleString("pt-BR");
             let temp = Number(listaParaExibir[i].temperatura);
-            
+
             let textoStatus = "Ideal";
             let classeStatus = "status-ideal-tabela";
 
             if (temp < MIN_IDEAL || temp > MAX_IDEAL) {
                 textoStatus = "Crítico";
-                classeStatus = "status-critico-tabela"; 
+                classeStatus = "status-critico-tabela";
             }
 
             containerLinhas.innerHTML += `
                 <div class="item-tabela">
                     <span class="coluna-dado">Câmara ${listaParaExibir[i].camara}</span>
-                    <span class="coluna-dado">${temp.toFixed(1)}°C</span> 
-                    <span class="coluna-dado">${dataFormatada}</span> 
+                    <span class="coluna-dado">${temp.toFixed(1)}°C</span>
+                    <span class="coluna-dado">${dataFormatada}</span>
                     <span class="status-faixa ${classeStatus}">${textoStatus}</span>
                 </div>
             `;
